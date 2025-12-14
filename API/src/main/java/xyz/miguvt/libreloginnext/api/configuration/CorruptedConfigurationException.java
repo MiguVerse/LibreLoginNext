@@ -9,7 +9,7 @@ package xyz.miguvt.libreloginnext.api.configuration;
 /**
  * This exception is thrown when the configuration is corrupted.
  *
- * @author kyngs
+ * @author miguvt, kyngs
  */
 public class CorruptedConfigurationException extends Exception {
 

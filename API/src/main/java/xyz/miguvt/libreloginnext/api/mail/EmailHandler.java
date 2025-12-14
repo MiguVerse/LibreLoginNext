@@ -9,7 +9,7 @@ package xyz.miguvt.libreloginnext.api.mail;
 /**
  * This interface is used to send emails to the users.
  *
- * @author kyngs
+ * @author miguvt, kyngs
  */
 public interface EmailHandler {
 

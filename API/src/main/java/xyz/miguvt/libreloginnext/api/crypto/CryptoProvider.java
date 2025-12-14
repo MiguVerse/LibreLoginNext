@@ -11,7 +11,7 @@ import javax.annotation.Nullable;
 /**
  * This interface manages passwords for its own algorithm. Each algorithm must implement this interface.
  *
- * @author kyngs
+ * @author miguvt, kyngs
  */
 public interface CryptoProvider {
 

@@ -9,7 +9,7 @@ package xyz.miguvt.libreloginnext.common.config;
 /**
  * This enum is used to manage new UUIDs.
  *
- * @author kyngs
+ * @author miguvt, kyngs
  */
 public enum NewUUIDCreator {
 

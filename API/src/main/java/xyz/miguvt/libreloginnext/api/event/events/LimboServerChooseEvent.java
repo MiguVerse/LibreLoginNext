@@ -11,7 +11,7 @@ import xyz.miguvt.libreloginnext.api.event.ServerChooseEvent;
 /**
  * Allows you to determine to which limbo player should be sent.
  *
- * @author kyngs
+ * @author miguvt, kyngs
  * @see ServerChooseEvent#setServer
  */
 public interface LimboServerChooseEvent<P, S> extends ServerChooseEvent<P, S> {

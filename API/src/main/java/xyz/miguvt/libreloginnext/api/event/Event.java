@@ -12,7 +12,7 @@ import xyz.miguvt.libreloginnext.api.PlatformHandle;
 /**
  * An abstract event for all events
  *
- * @author kyngs
+ * @author miguvt, kyngs
  */
 public interface Event<P, S> {
 

@@ -13,7 +13,7 @@ import xyz.miguvt.libreloginnext.api.event.PlayerBasedEvent;
  * Note, that this event will both be called if the player has authenticated manually, or automatically.
  * Use {@link #getReason()} to check the reason for authentication.
  *
- * @author kyngs
+ * @author miguvt, kyngs
  */
 public interface AuthenticatedEvent<P, S> extends PlayerBasedEvent<P, S> {
 

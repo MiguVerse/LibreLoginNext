@@ -12,7 +12,7 @@ import xyz.miguvt.libreloginnext.api.event.PlayerBasedEvent;
 /**
  * Fires after player has changed their password, their profile is already updated at the moment the event fires
  *
- * @author kyngs
+ * @author miguvt, kyngs
  */
 public interface PasswordChangeEvent<P, S> extends PlayerBasedEvent<P, S> {
 

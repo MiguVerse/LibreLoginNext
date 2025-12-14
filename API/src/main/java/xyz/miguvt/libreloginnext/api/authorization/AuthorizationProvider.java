@@ -13,7 +13,7 @@ import xyz.miguvt.libreloginnext.api.event.events.AuthenticatedEvent;
  * This interface manages user authorization.
  *
  * @param <P> The type of the player.
- * @author kyngs
+ * @author miguvt, kyngs
  */
 public interface AuthorizationProvider<P> {
 

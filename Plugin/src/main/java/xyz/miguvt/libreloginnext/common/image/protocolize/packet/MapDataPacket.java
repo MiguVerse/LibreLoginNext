@@ -23,7 +23,7 @@ import static dev.simplix.protocolize.api.util.ProtocolVersions.*;
 /**
  * Used to send a map data packet to the client.
  *
- * @author kyngs
+ * @author miguvt, kyngs
  */
 public class MapDataPacket extends AbstractPacket {
 

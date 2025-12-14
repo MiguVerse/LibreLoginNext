@@ -9,7 +9,7 @@ package xyz.miguvt.libreloginnext.api;
 /**
  * Logger class for LibreLoginNext.
  *
- * @author kyngs
+ * @author miguvt, kyngs
  */
 public interface Logger {
 

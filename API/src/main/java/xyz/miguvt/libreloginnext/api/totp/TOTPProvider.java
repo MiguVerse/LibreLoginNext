@@ -11,7 +11,7 @@ import xyz.miguvt.libreloginnext.api.database.User;
 /**
  * This interface handles TOTP data creation and verification.
  *
- * @author kyngs
+ * @author miguvt, kyngs
  */
 public interface TOTPProvider {
 

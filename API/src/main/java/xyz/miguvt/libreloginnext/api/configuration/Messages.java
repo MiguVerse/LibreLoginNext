@@ -14,7 +14,7 @@ import java.io.IOException;
 /**
  * This interface manages the messages of the plugin.
  *
- * @author kyngs
+ * @author miguvt, kyngs
  */
 public interface Messages {
 

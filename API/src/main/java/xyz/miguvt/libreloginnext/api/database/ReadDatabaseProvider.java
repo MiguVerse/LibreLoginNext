@@ -12,7 +12,7 @@ import java.util.UUID;
 /**
  * This interface is used to read from the database.
  *
- * @author kyngs
+ * @author miguvt, kyngs
  */
 public interface ReadDatabaseProvider {
 

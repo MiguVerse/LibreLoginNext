@@ -17,7 +17,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * <b>This implementation is thread-safe.</b>
  *
  * @param <T> key type
- * @author kyngs
+ * @author miguvt, kyngs
  */
 public class RateLimiter<T> {
 

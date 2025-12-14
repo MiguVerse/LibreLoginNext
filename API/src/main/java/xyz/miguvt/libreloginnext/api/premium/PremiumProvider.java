@@ -11,7 +11,7 @@ import java.util.UUID;
 /**
  * This interface handles {@link PremiumUser} fetching.
  *
- * @author kyngs
+ * @author miguvt, kyngs
  */
 public interface PremiumProvider {
 

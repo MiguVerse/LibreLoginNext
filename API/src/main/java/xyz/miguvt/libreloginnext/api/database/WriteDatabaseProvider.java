@@ -11,7 +11,7 @@ import java.util.Collection;
 /**
  * This interface is used to write to the database.
  *
- * @author kyngs
+ * @author miguvt, kyngs
  */
 public interface WriteDatabaseProvider {
 

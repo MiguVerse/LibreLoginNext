@@ -14,7 +14,7 @@ import org.jetbrains.annotations.Nullable;
  * @param hash The hash of the password.
  * @param salt The salt of the password.
  * @param algo The algorithm used to hash the password.
- * @author kyngs
+ * @author miguvt, kyngs
  */
 public record HashedPassword(String hash, @Nullable String salt, String algo) {
     @Override

@@ -16,7 +16,7 @@ import java.util.UUID;
 /**
  * An abstract event for events, that include player info
  *
- * @author kyngs
+ * @author miguvt, kyngs
  */
 public interface PlayerBasedEvent<P, S> extends Event<P, S> {
 

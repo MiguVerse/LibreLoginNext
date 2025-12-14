@@ -16,7 +16,7 @@ import java.util.UUID;
 /**
  * A user in the database.
  *
- * @author kyngs
+ * @author miguvt, kyngs
  */
 public interface User {
 

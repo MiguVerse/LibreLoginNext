@@ -9,7 +9,7 @@ package xyz.miguvt.libreloginnext.api.premium;
 /**
  * An exception that is thrown when fetching premium data fails.
  *
- * @author kyngs
+ * @author miguvt, kyngs
  */
 public class PremiumException extends Exception {
 

@@ -14,7 +14,7 @@ import xyz.miguvt.libreloginnext.api.util.ThrowableFunction;
  *
  * @param <E> The common exception type thrown by the database.
  * @param <I> The interface type used to talk to the database. For example, {@link java.sql.Connection} for SQL databases.
- * @author kyngs
+ * @author miguvt, kyngs
  */
 public interface DatabaseConnector<E extends Exception, I> {
 

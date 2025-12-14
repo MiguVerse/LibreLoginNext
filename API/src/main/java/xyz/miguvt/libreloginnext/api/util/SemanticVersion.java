@@ -13,7 +13,7 @@ package xyz.miguvt.libreloginnext.api.util;
  * @param minor The minor version.
  * @param patch The patch version.
  * @param dev   Whether this is a development version.
- * @author kyngs
+ * @author miguvt, kyngs
  */
 public record SemanticVersion(int major, int minor, int patch, boolean dev) {
 

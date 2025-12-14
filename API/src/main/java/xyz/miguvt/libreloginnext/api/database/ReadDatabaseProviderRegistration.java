@@ -20,7 +20,7 @@ import xyz.miguvt.libreloginnext.api.util.ThrowableFunction;
  * @param <R>               The type of the read database provider described by this registration
  * @param <C>               The type of the database connector
  * @param <E>               The type of the common exception thrown by the database. (e.g. SQLException)
- * @author kyngs
+ * @author miguvt, kyngs
  */
 public record ReadDatabaseProviderRegistration<R extends ReadDatabaseProvider, C extends DatabaseConnector<E, ?>, E extends Exception>(
         ThrowableFunction<C, R, E> factory, String id, @Nullable Class<C> databaseConnector) {

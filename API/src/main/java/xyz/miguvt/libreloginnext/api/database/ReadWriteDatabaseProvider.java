@@ -9,7 +9,7 @@ package xyz.miguvt.libreloginnext.api.database;
 /**
  * This interface is used to read and write to the database.
  *
- * @author kyngs
+ * @author miguvt, kyngs
  */
 public interface ReadWriteDatabaseProvider extends ReadDatabaseProvider, WriteDatabaseProvider {
 

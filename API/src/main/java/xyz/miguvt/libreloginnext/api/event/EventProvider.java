@@ -13,7 +13,7 @@ import java.util.function.Consumer;
  *
  * @param <P> The player type
  * @param <S> The server type
- * @author kyngs
+ * @author miguvt, kyngs
  */
 public interface EventProvider<P, S> {
 
