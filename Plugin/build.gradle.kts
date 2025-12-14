@@ -201,10 +201,10 @@ dependencies {
     compileOnly("org.apache.logging.log4j:log4j-core:2.25.2")
 
     //Libby
-    implementation("com.github.MiguVerse.libby:libby-bukkit:1.7.4")
-    implementation("com.github.MiguVerse.libby:libby-velocity:1.7.4")
-    implementation("com.github.MiguVerse.libby:libby-bungee:1.7.4")
-    implementation("com.github.MiguVerse.libby:libby-paper:1.7.4")
+    implementation("com.github.MiguVerse.libby:libby-bukkit:1.7.5")
+    implementation("com.github.MiguVerse.libby:libby-velocity:1.7.5")
+    implementation("com.github.MiguVerse.libby:libby-bungee:1.7.5")
+    implementation("com.github.MiguVerse.libby:libby-paper:1.7.5")
 
     //NanoLimboPlugin
     compileOnly("com.github.bivashy.NanoLimboPlugin:api:1.0.8") // TODO Need research on why it's not working if we change to something upper than 1.0.8, no breaking changes documented...
