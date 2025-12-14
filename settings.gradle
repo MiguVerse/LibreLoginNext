@@ -3,7 +3,17 @@ pluginManagement {
         maven {
             url = uri("https://repo.kyngs.xyz/gradle-plugins")
         }
+        maven {
+            url = uri("https://jitpack.io")
+        }
         gradlePluginPortal()
+    }
+    resolutionStrategy {
+        eachPlugin {
+            if (requested.id.id == "xyz.miguvt.libby.plugin") {
+                useModule("com.github.MiguVerse.libby-gradle-plugin:plugin:${requested.version}")
+            }
+        }
     }
 }
 
