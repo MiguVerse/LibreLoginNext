@@ -1,5 +1,5 @@
-name: "LibreLogin"
-author: "kyngs"
+name: "LibreLoginNext"
+authors: ["miguvt", "kyngs"]
 version: '${version}'
 main: "xyz.kyngs.librelogin.bungeecord.BungeeCordBootstrap"
 softDepends:
