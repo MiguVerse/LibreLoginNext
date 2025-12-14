@@ -33,9 +33,10 @@ public class ResetPasswordViaEMailCommand<P> extends EMailCommand<P> {
     @Default
     @Syntax("{@@syntax.reset-password}")
     @CommandCompletion("%autocomplete.reset-password")
-    public CompletionStage<Void> onResetPassword(Audience audience, P player, UUID uuid) {
+    public CompletionStage<Void> onResetPassword(Audience audience, UUID uuid) {
         return runAsync(() -> {
-            var user = getUser(player);
+            var player = getPlayer(uuid);
+            var user = getUser(uuid);
 
             if (user.getEmail() == null)
                 throw new InvalidCommandArgument(getMessage("error-no-email"));

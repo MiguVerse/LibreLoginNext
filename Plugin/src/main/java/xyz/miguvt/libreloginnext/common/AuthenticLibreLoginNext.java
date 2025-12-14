@@ -322,7 +322,7 @@ public abstract class AuthenticLibreLoginNext<P, S> implements LibreLoginNextPlu
         commandProvider = new CommandProvider<>(this);
 
         if (version.dev()) {
-            logger.warn("!! YOU ARE RUNNING A DEVELOPMENT BUILD OF LIBRELOGIN !!");
+            logger.warn("!! YOU ARE RUNNING A DEVELOPMENT BUILD OF LIBRELOGINNEXT !!");
             logger.warn("!! THIS IS NOT A RELEASE, USE THIS ONLY IF YOU WERE INSTRUCTED TO DO SO. DO NOT USE THIS IN PRODUCTION !!");
         } else {
             initMetrics();
@@ -386,7 +386,7 @@ public abstract class AuthenticLibreLoginNext<P, S> implements LibreLoginNextPlu
 
         } catch (Exception e) {
             var cause = GeneralUtil.getFurthestCause(e);
-            logger.error("!! THIS IS MOST LIKELY NOT AN ERROR CAUSED BY LIBRELOGIN !!");
+            logger.error("!! THIS IS MOST LIKELY NOT AN ERROR CAUSED BY LIBRELOGINNEXT !!");
             logger.error("Failed to connect to the database, this most likely is caused by wrong credentials. Cause: %s: %s".formatted(cause.getClass().getSimpleName(), cause.getMessage()));
             shutdownProxy(1);
         }
@@ -422,7 +422,7 @@ public abstract class AuthenticLibreLoginNext<P, S> implements LibreLoginNextPlu
             shutdownProxy(1);
         } catch (CorruptedConfigurationException e) {
             var cause = GeneralUtil.getFurthestCause(e);
-            logger.error("!! THIS IS MOST LIKELY NOT AN ERROR CAUSED BY LIBRELOGIN !!");
+            logger.error("!! THIS IS MOST LIKELY NOT AN ERROR CAUSED BY LIBRELOGINNEXT !!");
             logger.error("!!The messages are corrupted, please look below for further clues. If you are clueless, delete the messages and a new ones will be created for you. Cause: %s: %s".formatted(cause.getClass().getSimpleName(), cause.getMessage()));
             shutdownProxy(1);
         }
@@ -459,7 +459,7 @@ public abstract class AuthenticLibreLoginNext<P, S> implements LibreLoginNextPlu
             shutdownProxy(1);
         } catch (CorruptedConfigurationException e) {
             var cause = GeneralUtil.getFurthestCause(e);
-            logger.error("!! THIS IS MOST LIKELY NOT AN ERROR CAUSED BY LIBRELOGIN !!");
+            logger.error("!! THIS IS MOST LIKELY NOT AN ERROR CAUSED BY LIBRELOGINNEXT !!");
             logger.error("!!The configuration is corrupted, please look below for further clues. If you are clueless, delete the config and a new one will be created for you. Cause: %s: %s".formatted(cause.getClass().getSimpleName(), cause.getMessage()));
             shutdownProxy(1);
         }
@@ -669,7 +669,7 @@ public abstract class AuthenticLibreLoginNext<P, S> implements LibreLoginNextPlu
                 logger.info("You are running the latest version of LibreLoginNext");
             } else {
                 Collections.reverse(behind);
-                logger.warn("!! YOU ARE RUNNING AN OUTDATED VERSION OF LIBRELOGIN !!");
+                logger.warn("!! YOU ARE RUNNING AN OUTDATED VERSION OF LIBRELOGINNEXT !!");
                 logger.info("You are running version %s, the latest version is %s. You are running %s versions behind. Newer versions:".formatted(getVersion(), latest, behind.size()));
                 for (Release release : behind) {
                     logger.info("- %s".formatted(release.name()));

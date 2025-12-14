@@ -12,6 +12,7 @@ import xyz.miguvt.libreloginnext.common.AuthenticLibreLoginNext;
 import xyz.miguvt.libreloginnext.common.command.InvalidCommandArgument;
 import xyz.miguvt.libreloginnext.common.event.events.AuthenticPasswordChangeEvent;
 
+import java.util.UUID;
 import java.util.concurrent.CompletionStage;
 
 @CommandAlias("confirmpasswordreset")
@@ -23,9 +24,10 @@ public class ConfirmPasswordReset<P> extends EMailCommand<P> {
     @Default
     @Syntax("{@@syntax.confirm-password-reset}")
     @CommandCompletion("%autocomplete.confirm-password-reset")
-    public CompletionStage<Void> onConfirmPassReset(Audience audience, P player, String token, String password, @Single String passwordRepeat) {
+    public CompletionStage<Void> onConfirmPassReset(Audience audience, UUID uuid, String token, String password, @Single String passwordRepeat) {
         return runAsync(() -> {
-            var user = getUser(player);
+            var player = getPlayer(uuid);
+            var user = getUser(uuid);
 
             var cached = plugin.getAuthorizationProvider().getPasswordResetCache().getIfPresent(user.getUuid());
             if (cached == null) {

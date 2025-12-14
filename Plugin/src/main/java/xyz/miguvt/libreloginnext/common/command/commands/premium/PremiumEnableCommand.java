@@ -26,9 +26,10 @@ public class PremiumEnableCommand<P> extends PremiumCommand<P> {
     @Default
     @Syntax("{@@syntax.premium}")
     @CommandCompletion("%autocomplete.premium")
-    public CompletionStage<Void> onPremium(Audience sender, UUID uuid, P player, @Single String password) {
+    public CompletionStage<Void> onPremium(Audience sender, UUID uuid, @Single String password) {
         return runAsync(() -> {
-            var user = getUser(player);
+            var player = getPlayer(uuid);
+            var user = getUser(uuid);
             checkCracked(user);
 
             var hashed = user.getHashedPassword();

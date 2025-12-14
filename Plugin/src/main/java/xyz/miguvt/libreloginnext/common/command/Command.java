@@ -20,6 +20,7 @@ import xyz.miguvt.libreloginnext.api.crypto.HashedPassword;
 import xyz.miguvt.libreloginnext.api.database.ReadWriteDatabaseProvider;
 import xyz.miguvt.libreloginnext.api.database.User;
 
+import java.util.UUID;
 import java.util.concurrent.CompletionStage;
 
 public class Command<P> extends BaseCommand {
@@ -50,7 +51,15 @@ public class Command<P> extends BaseCommand {
         return plugin.getAuthorizationProvider();
     }
 
-    protected void checkAuthorized(P player) {
+    protected P getPlayer(UUID uuid) {
+        var player = plugin.getPlayerForUUID(uuid);
+        if (player == null)
+            throw new co.aikar.commands.InvalidCommandArgument(MessageKeys.NOT_ALLOWED_ON_CONSOLE, false);
+        return player;
+    }
+
+    protected void checkAuthorized(UUID uuid) {
+        var player = getPlayer(uuid);
         if (!getAuthorizationProvider().isAuthorized(player)) {
             throw new InvalidCommandArgument(getMessage("error-not-authorized"));
         }
@@ -64,11 +73,9 @@ public class Command<P> extends BaseCommand {
         return GeneralUtil.runAsync(runnable);
     }
 
-    protected User getUser(P player) {
-        if (player == null)
+    protected User getUser(UUID uuid) {
+        if (uuid == null)
             throw new co.aikar.commands.InvalidCommandArgument(MessageKeys.NOT_ALLOWED_ON_CONSOLE, false);
-
-        var uuid = plugin.getPlatformHandle().getUUIDForPlayer(player);
 
         if (plugin.fromFloodgate(uuid)) throw new InvalidCommandArgument(getMessage("error-from-floodgate"));
 

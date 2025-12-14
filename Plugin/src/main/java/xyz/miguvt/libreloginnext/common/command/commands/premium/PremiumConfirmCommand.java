@@ -11,6 +11,7 @@ import co.aikar.commands.annotation.Default;
 import net.kyori.adventure.audience.Audience;
 import xyz.miguvt.libreloginnext.common.AuthenticLibreLoginNext;
 
+import java.util.UUID;
 import java.util.concurrent.CompletionStage;
 
 @CommandAlias("premiumconfirm|confirmpremium")
@@ -20,9 +21,10 @@ public class PremiumConfirmCommand<P> extends PremiumCommand<P> {
     }
 
     @Default
-    public CompletionStage<Void> onPremiumConfirm(Audience sender, P player) {
+    public CompletionStage<Void> onPremiumConfirm(Audience sender, UUID uuid) {
         return runAsync(() -> {
-            var user = getUser(player);
+            var player = getPlayer(uuid);
+            var user = getUser(uuid);
             checkCracked(user);
 
             plugin.getCommandProvider().onConfirm(player, sender, user);

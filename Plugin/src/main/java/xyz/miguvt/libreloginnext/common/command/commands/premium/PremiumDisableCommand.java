@@ -12,6 +12,7 @@ import net.kyori.adventure.audience.Audience;
 import xyz.miguvt.libreloginnext.common.AuthenticLibreLoginNext;
 import xyz.miguvt.libreloginnext.common.event.events.AuthenticPremiumLoginSwitchEvent;
 
+import java.util.UUID;
 import java.util.concurrent.CompletionStage;
 
 @CommandAlias("cracked|manuallogin")
@@ -22,9 +23,10 @@ public class PremiumDisableCommand<P> extends PremiumCommand<P> {
     }
 
     @Default
-    public CompletionStage<Void> onCracked(Audience sender, P player) {
+    public CompletionStage<Void> onCracked(Audience sender, UUID uuid) {
         return runAsync(() -> {
-            var user = getUser(player);
+            var player = getPlayer(uuid);
+            var user = getUser(uuid);
             checkPremium(user);
 
             sender.sendMessage(getMessage("info-disabling"));

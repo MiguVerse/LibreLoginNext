@@ -15,6 +15,7 @@ import xyz.miguvt.libreloginnext.common.event.events.AuthenticPasswordChangeEven
 import xyz.miguvt.libreloginnext.common.event.events.AuthenticWrongPasswordEvent;
 import xyz.miguvt.libreloginnext.api.event.events.WrongPasswordEvent.AuthenticationSource;
 
+import java.util.UUID;
 import java.util.concurrent.CompletionStage;
 
 @CommandAlias("changepassword|changepass|passwd|passch")
@@ -26,9 +27,10 @@ public class ChangePasswordCommand<P> extends Command<P> {
     @Default
     @Syntax("{@@syntax.change-password}")
     @CommandCompletion("%autocomplete.change-password")
-    public CompletionStage<Void> onPasswordChange(Audience sender, P player, String oldPass, @Single String newPass) {
+    public CompletionStage<Void> onPasswordChange(Audience sender, UUID uuid, String oldPass, @Single String newPass) {
         return runAsync(() -> {
-            var user = getUser(player);
+            var player = getPlayer(uuid);
+            var user = getUser(uuid);
 
             if (!user.isRegistered()) {
                 throw new InvalidCommandArgument(getMessage("error-no-password"));

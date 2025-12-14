@@ -12,6 +12,7 @@ import xyz.miguvt.libreloginnext.common.AuthenticLibreLoginNext;
 import xyz.miguvt.libreloginnext.common.command.InvalidCommandArgument;
 import xyz.miguvt.libreloginnext.api.event.events.AuthenticatedEvent;
 
+import java.util.UUID;
 import java.util.concurrent.CompletionStage;
 
 @CommandAlias("register|reg")
@@ -23,10 +24,11 @@ public class RegisterCommand<P> extends AuthorizationCommand<P> {
     @Default
     @Syntax("{@@syntax.register}")
     @CommandCompletion("%autocomplete.register")
-    public CompletionStage<Void> onRegister(Audience sender, P player, @Single String password, String passwordRepeat) {
+    public CompletionStage<Void> onRegister(Audience sender, UUID uuid, @Single String password, String passwordRepeat) {
         return runAsync(() -> {
-            checkUnauthorized(player);
-            var user = getUser(player);
+            checkUnauthorized(uuid);
+            var player = getPlayer(uuid);
+            var user = getUser(uuid);
 
             if (user.isRegistered()) throw new InvalidCommandArgument(getMessage("error-already-registered"));
             if (!password.contentEquals(passwordRepeat))

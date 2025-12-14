@@ -14,6 +14,7 @@ import net.kyori.adventure.audience.Audience;
 import xyz.miguvt.libreloginnext.common.AuthenticLibreLoginNext;
 import xyz.miguvt.libreloginnext.common.command.InvalidCommandArgument;
 
+import java.util.UUID;
 import java.util.concurrent.CompletionStage;
 
 @CommandAlias("verifyemail")
@@ -26,9 +27,9 @@ public class VerifyEMailCommand<P> extends EMailCommand<P> {
     @Default
     @Syntax("{@@syntax.verify-email}")
     @CommandCompletion("%autocomplete.verify-email")
-    public CompletionStage<Void> onVerifyMail(P player, Audience sender, String token) {
+    public CompletionStage<Void> onVerifyMail(Audience sender, UUID uuid, String token) {
         return runAsync(() -> {
-            var user = getUser(player);
+            var user = getUser(uuid);
 
             var cached = plugin.getAuthorizationProvider().getEmailConfirmCache().getIfPresent(user.getUuid());
             if (cached == null) {

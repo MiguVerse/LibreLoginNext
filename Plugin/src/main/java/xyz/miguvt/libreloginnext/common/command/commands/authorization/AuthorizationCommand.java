@@ -10,13 +10,16 @@ import xyz.miguvt.libreloginnext.common.AuthenticLibreLoginNext;
 import xyz.miguvt.libreloginnext.common.command.Command;
 import xyz.miguvt.libreloginnext.common.command.InvalidCommandArgument;
 
+import java.util.UUID;
+
 public class AuthorizationCommand<P> extends Command<P> {
 
     public AuthorizationCommand(AuthenticLibreLoginNext<P, ?> premium) {
         super(premium);
     }
 
-    protected void checkUnauthorized(P player) {
+    protected void checkUnauthorized(UUID uuid) {
+        var player = getPlayer(uuid);
         if (getAuthorizationProvider().isAuthorized(player)) {
             throw new InvalidCommandArgument(getMessage("error-already-authorized"));
         }

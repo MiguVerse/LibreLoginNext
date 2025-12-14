@@ -60,16 +60,6 @@ public class CommandProvider<P, S> extends AuthenticHandler<P, S> {
             return plugin.getAudienceFromIssuer(context.getIssuer());
         });
 
-        // Thanks type erasure
-        contexts.registerIssuerAwareContext(Object.class, context -> {
-            var player = plugin.getPlayerFromIssuer(context.getIssuer());
-
-            if (player == null)
-                throw new co.aikar.commands.InvalidCommandArgument(MessageKeys.NOT_ALLOWED_ON_CONSOLE, false);
-
-            return player;
-        });
-
         contexts.registerIssuerAwareContext(UUID.class, context -> {
             var player = plugin.getPlayerFromIssuer(context.getIssuer());
 

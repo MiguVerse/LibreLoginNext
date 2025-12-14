@@ -15,6 +15,7 @@ import xyz.miguvt.libreloginnext.common.AuthenticLibreLoginNext;
 import xyz.miguvt.libreloginnext.common.command.Command;
 import xyz.miguvt.libreloginnext.common.command.InvalidCommandArgument;
 
+import java.util.UUID;
 import java.util.concurrent.CompletionStage;
 
 @CommandAlias("2faconfirm")
@@ -26,10 +27,11 @@ public class TwoFactorConfirmCommand<P> extends Command<P> {
     @Default
     @Syntax("{@@syntax.2fa-confirm}")
     @CommandCompletion("%autocomplete.2fa-confirm")
-    public CompletionStage<Void> onTwoFactorConfirm(Audience sender, P player, String code) {
+    public CompletionStage<Void> onTwoFactorConfirm(Audience sender, UUID uuid, String code) {
         return runAsync(() -> {
-            checkAuthorized(player);
-            var user = getUser(player);
+            checkAuthorized(uuid);
+            var player = getPlayer(uuid);
+            var user = getUser(uuid);
             var auth = plugin.getAuthorizationProvider();
 
             if (!auth.isAwaiting2FA(player)) {

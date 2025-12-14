@@ -33,9 +33,10 @@ public class SetEMailCommand<P> extends EMailCommand<P> {
     @Default
     @Syntax("{@@syntax.set-email}")
     @CommandCompletion("%autocomplete.set-email")
-    public CompletionStage<Void> onSetMail(Audience sender, P player, UUID uuid, String mail, @Single String password) {
+    public CompletionStage<Void> onSetMail(Audience sender, UUID uuid, String mail, @Single String password) {
         return runAsync(() -> {
-            var user = getUser(player);
+            var player = getPlayer(uuid);
+            var user = getUser(uuid);
 
             var hashed = user.getHashedPassword();
             var crypto = getCrypto(hashed);

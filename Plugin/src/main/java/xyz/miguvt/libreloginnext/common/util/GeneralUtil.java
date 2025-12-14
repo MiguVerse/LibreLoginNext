@@ -115,7 +115,7 @@ public class GeneralUtil {
 
                 } catch (Exception e) {
                     var cause = GeneralUtil.getFurthestCause(e);
-                    logger.error("!! THIS IS NOT AN ERROR CAUSED BY LIBRELOGIN !!");
+                    logger.error("!! THIS IS NOT AN ERROR CAUSED BY LIBRELOGINNEXT !!");
                     logger.error("Failed to connect to the OLD database, this most likely is caused by wrong credentials. Cause: %s: %s".formatted(cause.getClass().getSimpleName(), cause.getMessage()));
                     logger.error("Aborting migration");
 
