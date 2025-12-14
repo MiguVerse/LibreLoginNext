@@ -21,7 +21,7 @@ mcupload {
             loaders = listOf("paper", "purpur", "bungeecord", "waterfall", "velocity")
             projectId = "tL0SCXYq"
             gameVersions = listOf(
-                "1.21.4", "1.21.3", "1.21.2", "1.21.1", "1.21",
+                "1.21.11", "1.21.10", "1.21.9", "1.21.8", "1.21.7", "1.21.6", "1.21.5", "1.21.4", "1.21.3", "1.21.2", "1.21.1", "1.21",
                 "1.20.6", "1.20.5", "1.20.4", "1.20.3", "1.20.2", "1.20.1", "1.20",
                 "1.19.4", "1.19.3", "1.19.2", "1.19.1", "1.19",
                 "1.18.2", "1.18.1", "1.18",
@@ -62,6 +62,7 @@ repositories {
     maven { url = uri("https://repo.papermc.io/repository/maven-public/") }
     maven { url = uri("https://hub.spigotmc.org/nexus/") }
     maven { url = uri("https://repo.kyngs.xyz/public/") }
+    maven { url = uri("https://repo.aikar.co/content/groups/aikar/") }
     maven { url = uri("https://mvn.exceptionflug.de/repository/exceptionflug-public/") }
     maven { url = uri("https://repo.dmulloy2.net/repository/public/") }
     maven { url = uri("https://repo.alessiodp.com/releases/") }
@@ -124,13 +125,13 @@ libby {
 configurations.all {
     // I hate this, but it needs to be done as bungeecord does not support newer versions of adventure, and packetevents includes it
     resolutionStrategy {
-        force("net.kyori:adventure-text-minimessage:4.14.0")
-        force("net.kyori:adventure-text-serializer-gson:4.14.0")
-        force("net.kyori:adventure-text-serializer-legacy:4.14.0")
-        force("net.kyori:adventure-text-serializer-json:4.14.0")
-        force("net.kyori:adventure-api:4.14.0")
-        force("net.kyori:adventure-nbt:4.14.0")
-        force("net.kyori:adventure-key:4.14.0")
+        force("net.kyori:adventure-text-minimessage:4.25.0")
+        force("net.kyori:adventure-text-serializer-gson:4.25.0")
+        force("net.kyori:adventure-text-serializer-legacy:4.25.0")
+        force("net.kyori:adventure-text-serializer-json:4.25.0")
+        force("net.kyori:adventure-api:4.25.0")
+        force("net.kyori:adventure-nbt:4.25.0")
+        force("net.kyori:adventure-key:4.25.0")
     }
 }
 
@@ -144,63 +145,65 @@ dependencies {
     compileOnly("com.velocitypowered:velocity-proxy:3.2.0-SNAPSHOT-277")
 
     //MySQL
-    libby("org.mariadb.jdbc:mariadb-java-client:3.5.1")
-    libby("com.zaxxer:HikariCP:6.2.1")
+    libby("org.mariadb.jdbc:mariadb-java-client:3.5.6")
+    libby("com.zaxxer:HikariCP:7.0.2")
 
     //SQLite
-    libby("org.xerial:sqlite-jdbc:3.47.1.0")
+    libby("org.xerial:sqlite-jdbc:3.51.1.0")
 
     //PostgreSQL
-    libby("org.postgresql:postgresql:42.7.5")
+    libby("org.postgresql:postgresql:42.7.8")
 
     //ACF
-    libby("com.github.kyngs.commands:acf-velocity:7d5bf7cac0")
-    libby("com.github.kyngs.commands:acf-bungee:7d5bf7cac0")
-    libby("com.github.kyngs.commands:acf-paper:7d5bf7cac0")
+    libby("co.aikar:acf-velocity:0.5.1-SNAPSHOT")
+    libby("co.aikar:acf-bungee:0.5.1-SNAPSHOT")
+    libby("co.aikar:acf-paper:0.5.1-SNAPSHOT")
 
     //Utils
-    libby("com.github.ben-manes.caffeine:caffeine:3.2.0")
-    libby("org.spongepowered:configurate-hocon:4.1.2")
+    libby("com.github.ben-manes.caffeine:caffeine:3.2.3")
+    libby("org.spongepowered:configurate-hocon:4.2.0")
     libby("at.favre.lib:bcrypt:0.10.2")
     libby("dev.samstevens.totp:totp:1.7.1")
     compileOnly("dev.simplix:protocolize-api:2.4.2")
-    libby("org.bouncycastle:bcprov-jdk18on:1.80")
+    libby("org.bouncycastle:bcprov-jdk18on:1.83")
     libby("org.apache.commons:commons-email:1.6.0")
     // DO NOT UPGRADE TO 4.15.0 OR ABOVE BEFORE TESTING WATERFALL AND BUNGEECORD COMPATIBILITY!!!
     libby("net.kyori:adventure-text-minimessage:4.14.0")
     libby("com.github.kyngs:LegacyMessage:0.2.0")
 
     //Geyser
-    compileOnly("org.geysermc.floodgate:api:2.2.0-SNAPSHOT")
+    compileOnly("org.geysermc.floodgate:api:2.2.5-SNAPSHOT")
+    compileOnly("org.geysermc.cumulus:cumulus:2.0.0-SNAPSHOT")
+
     //LuckPerms
     compileOnly("net.luckperms:api:5.4")
 
     //Bungeecord
-    compileOnly("net.md-5:bungeecord-api:1.21-R0.1-SNAPSHOT")
-    compileOnly("com.github.ProxioDev.ValioBungee:RedisBungee-Bungee:0.12.5")
-    libby("net.kyori:adventure-platform-bungeecord:4.1.2")
+    compileOnly("net.md-5:bungeecord-api:1.21-R0.5-SNAPSHOT")
+    compileOnly("com.github.ProxioDev.ValioBungee:RedisBungee-Bungee:0.12.6")
+    libby("net.kyori:adventure-platform-bungeecord:4.4.1")
 
     //BStats
-    libby("org.bstats:bstats-velocity:3.0.2")
-    libby("org.bstats:bstats-bungeecord:3.0.2")
-    libby("org.bstats:bstats-bukkit:3.0.2")
+    libby("org.bstats:bstats-velocity:3.1.0")
+    libby("org.bstats:bstats-bungeecord:3.1.0")
+    libby("org.bstats:bstats-bukkit:3.1.0")
 
     //Paper
-    compileOnly("io.papermc.paper:paper-api:1.21.4-R0.1-SNAPSHOT")
+    compileOnly("io.papermc.paper:paper-api:1.21.11-R0.1-SNAPSHOT")
     //compileOnly "com.comphenix.protocol:ProtocolLib:5.1.0"
-    libby("com.github.retrooper:packetevents-spigot:2.7.0")
-    compileOnly("io.netty:netty-transport:4.1.108.Final")
-    compileOnly("com.mojang:datafixerupper:5.0.28") //I hate this so much
-    compileOnly("org.apache.logging.log4j:log4j-core:2.23.1")
+    libby("com.github.retrooper:packetevents-spigot:2.11.0")
+    compileOnly("io.netty:netty-transport:4.2.8.Final")
+    compileOnly("com.mojang:datafixerupper:8.0.16") //I hate this so much
+    compileOnly("org.apache.logging.log4j:log4j-core:2.25.2")
 
     //Libby
-    implementation("xyz.kyngs.libby:libby-bukkit:1.6.0")
-    implementation("xyz.kyngs.libby:libby-velocity:1.6.0")
-    implementation("xyz.kyngs.libby:libby-bungee:1.6.0")
-    implementation("xyz.kyngs.libby:libby-paper:1.6.0")
+    implementation("xyz.kyngs.libby:libby-bukkit:1.7.0")
+    implementation("xyz.kyngs.libby:libby-velocity:1.7.0")
+    implementation("xyz.kyngs.libby:libby-bungee:1.7.0")
+    implementation("xyz.kyngs.libby:libby-paper:1.7.0")
 
     //NanoLimboPlugin
-    compileOnly("com.github.bivashy.NanoLimboPlugin:api:1.0.8")
+    compileOnly("com.github.bivashy.NanoLimboPlugin:api:1.0.8") // TODO Need research on why it's not working if we change to something upper than 1.0.8, no breaking changes documented...
 }
 
 tasks.withType<ProcessResources> {
