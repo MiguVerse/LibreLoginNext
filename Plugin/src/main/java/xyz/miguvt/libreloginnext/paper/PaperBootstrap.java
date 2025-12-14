@@ -21,7 +21,7 @@ import org.jetbrains.annotations.Nullable;
 
 public class PaperBootstrap extends JavaPlugin implements LibreLoginNextProvider<Player, World> {
 
-    private PaperLibreLoginNext libreLogin;
+    private PaperLibreLoginNext libreLoginNext;
 
     @Override
     public @Nullable ChunkGenerator getDefaultWorldGenerator(@NotNull String worldName, @Nullable String id) {
@@ -64,13 +64,13 @@ public class PaperBootstrap extends JavaPlugin implements LibreLoginNextProvider
             stopServer();
         }
 
-        libreLogin = new PaperLibreLoginNext(this);
+        libreLoginNext = new PaperLibreLoginNext(this);
     }
 
     @Override
     public void onEnable() {
         getLogger().info("Bootstrapping LibreLoginNext...");
-        libreLogin.enable();
+        libreLoginNext.enable();
     }
 
     private void unsupportedSetup() {
@@ -94,12 +94,12 @@ public class PaperBootstrap extends JavaPlugin implements LibreLoginNextProvider
 
     @Override
     public void onDisable() {
-        libreLogin.disable();
+        libreLoginNext.disable();
     }
 
     @Override
     public PaperLibreLoginNext getLibreLoginNext() {
-        return libreLogin;
+        return libreLoginNext;
     }
 
     @Override

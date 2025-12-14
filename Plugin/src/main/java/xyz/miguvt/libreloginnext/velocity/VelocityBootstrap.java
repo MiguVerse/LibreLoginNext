@@ -49,7 +49,7 @@ public class VelocityBootstrap implements LibreLoginNextProvider<Player, Registe
     PluginDescription pluginDescription;
 
     ProxyServer server;
-    private final VelocityLibreLoginNext libreLogin;
+    private final VelocityLibreLoginNext libreLoginNext;
 
     @Inject
     public VelocityBootstrap(ProxyServer server, Injector injector, Logger logger, PluginContainer container) {
@@ -80,21 +80,21 @@ public class VelocityBootstrap implements LibreLoginNextProvider<Player, Registe
 
         libraryManager.configureFromJSON();
 
-        libreLogin = new VelocityLibreLoginNext(this);
-        injector.injectMembers(libreLogin);
+        libreLoginNext = new VelocityLibreLoginNext(this);
+        injector.injectMembers(libreLoginNext);
     }
 
     @Subscribe
     public void onInitialization(ProxyInitializeEvent event) {
-        libreLogin.enable();
+        libreLoginNext.enable();
 
-        server.getEventManager().register(this, new Blockers(libreLogin.getAuthorizationProvider(), libreLogin.getConfiguration(), libreLogin.getMessages()));
-        server.getEventManager().register(this, new VelocityListeners(libreLogin));
+        server.getEventManager().register(this, new Blockers(libreLoginNext.getAuthorizationProvider(), libreLoginNext.getConfiguration(), libreLoginNext.getMessages()));
+        server.getEventManager().register(this, new VelocityListeners(libreLoginNext));
     }
 
     @Override
     public LibreLoginNextPlugin<Player, RegisteredServer> getLibreLoginNext() {
-        return libreLogin;
+        return libreLoginNext;
     }
 
     @Override
@@ -110,6 +110,6 @@ public class VelocityBootstrap implements LibreLoginNextProvider<Player, Registe
 
     @Subscribe
     public void onShutdown(ProxyShutdownEvent event) {
-        libreLogin.disable();
+        libreLoginNext.disable();
     }
 }

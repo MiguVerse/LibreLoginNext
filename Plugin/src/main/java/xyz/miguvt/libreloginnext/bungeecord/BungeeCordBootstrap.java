@@ -15,7 +15,7 @@ import xyz.miguvt.libreloginnext.api.util.SemanticVersion;
 
 public class BungeeCordBootstrap extends Plugin implements LibreLoginNextProvider<ProxiedPlayer, ServerInfo> {
 
-    private BungeeCordLibreLoginNext libreLogin;
+    private BungeeCordLibreLoginNext libreLoginNext;
 
     @Override
     public void onLoad() {
@@ -25,22 +25,22 @@ public class BungeeCordBootstrap extends Plugin implements LibreLoginNextProvide
 
         libraryManager.configureFromJSON();
 
-        libreLogin = new BungeeCordLibreLoginNext(this);
+        libreLoginNext = new BungeeCordLibreLoginNext(this);
     }
 
     @Override
     public void onEnable() {
-        libreLogin.enable();
+        libreLoginNext.enable();
     }
 
     @Override
     public void onDisable() {
-        libreLogin.disable();
+        libreLoginNext.disable();
     }
 
     @Override
     public BungeeCordLibreLoginNext getLibreLoginNext() {
-        return libreLogin;
+        return libreLoginNext;
     }
 
     @Override

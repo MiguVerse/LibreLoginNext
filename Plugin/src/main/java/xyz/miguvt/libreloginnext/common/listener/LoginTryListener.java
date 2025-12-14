@@ -22,13 +22,13 @@ public class LoginTryListener<P, S> {
     private final AuthenticLibreLoginNext<P, S> plugin;
     private final Cache<P, Integer> loginTries;
 
-    public LoginTryListener(AuthenticLibreLoginNext<P, S> libreLogin) {
-        this.plugin = libreLogin;
+    public LoginTryListener(AuthenticLibreLoginNext<P, S> libreLoginNext) {
+        this.plugin = libreLoginNext;
         this.loginTries = Caffeine.newBuilder()
                 .expireAfterAccess(plugin.getConfiguration().get(ConfigurationKeys.MILLISECONDS_TO_EXPIRE_LOGIN_ATTEMPTS), TimeUnit.MILLISECONDS)
                 .build();
-        libreLogin.getEventProvider().subscribe(libreLogin.getEventTypes().wrongPassword, this::onWrongPassword);
-        libreLogin.getEventProvider().subscribe(libreLogin.getEventTypes().authenticated, this::onAuthenticated);
+        libreLoginNext.getEventProvider().subscribe(libreLoginNext.getEventTypes().wrongPassword, this::onWrongPassword);
+        libreLoginNext.getEventProvider().subscribe(libreLoginNext.getEventTypes().authenticated, this::onAuthenticated);
     }
 
     private void onWrongPassword(WrongPasswordEvent<P, S> wrongPasswordEvent) {
