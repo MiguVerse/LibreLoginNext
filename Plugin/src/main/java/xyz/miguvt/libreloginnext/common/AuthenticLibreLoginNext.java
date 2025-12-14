@@ -598,7 +598,7 @@ public abstract class AuthenticLibreLoginNext<P, S> implements LibreLoginNextPlu
 
         if (!file.exists()) {
             logger.info("Forbidden passwords list doesn't exist, downloading...");
-            try (BufferedInputStream in = new BufferedInputStream(new URL("https://raw.githubusercontent.com/kyngs/LibreLogin/dev/forbidden-passwords.txt").openStream())) {
+            try (BufferedInputStream in = new BufferedInputStream(new URL("https://raw.githubusercontent.com/MiguVerse/LibreLoginNext/dev/forbidden-passwords.txt").openStream())) {
                 if (!file.createNewFile()) {
                     throw new IOException("Failed to create file");
                 }

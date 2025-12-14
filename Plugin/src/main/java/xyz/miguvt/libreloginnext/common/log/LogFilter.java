@@ -30,13 +30,13 @@ public abstract class LogFilter {
         PROTECTED_COMMANDS.add("passwd");
         PROTECTED_COMMANDS.add("confirmpasswordreset");
         PROTECTED_COMMANDS.add("setemail");
-        PROTECTED_COMMANDS.add("librelogin user register");
-        PROTECTED_COMMANDS.add("librelogin user pass-change");
+        PROTECTED_COMMANDS.add("libreloginnext user register");
+        PROTECTED_COMMANDS.add("libreloginnext user pass-change");
     }
 
     protected boolean checkMessage(String message) {
         // This sucks, but it's the only way to filter out the spam from the plugin
-        if (message.contains("Plugin listener xyz.kyngs.librelogin.bungeecord.BungeeCordListener took")) return false;
+        if (message.contains("Plugin listener xyz.miguvt.libreloginnext.bungeecord.BungeeCordListener took")) return false;
         if (!message.contains("issued server command: /") && !message.contains("executed command /") && !message.contains("executed command: /") && !message.contains("Duplicate key name"))
             return true;
 

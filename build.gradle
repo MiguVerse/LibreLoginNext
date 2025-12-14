@@ -8,7 +8,7 @@ version '0.25.0-SNAPSHOT'
 
 subprojects {
     version = rootProject.version
-    group = 'xyz.kyngs.librelogin'
+    group = 'xyz.miguvt.libreloginnext'
 
     apply plugin: 'org.cadixdev.licenser'
 

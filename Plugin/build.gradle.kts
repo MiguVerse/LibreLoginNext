@@ -39,7 +39,7 @@ mcupload {
         }
         github {
             token = System.getenv("GITHUB_TOKEN")
-            repository = "kyngs/LibreLogin"
+            repository = "MiguVerse/LibreLoginNext"
         }
         discord {
             webhookUrl = System.getenv("DISCORD_WEBHOOK_URL")
@@ -76,7 +76,7 @@ blossom {
 }
 
 tasks.withType<ShadowJar> {
-    archiveFileName.set("LibreLogin.jar")
+    archiveFileName.set("LibreLoginNext.jar")
 
     dependencies {
         exclude(dependency("org.slf4j:.*:.*"))
@@ -85,20 +85,20 @@ tasks.withType<ShadowJar> {
         exclude(dependency("com.google.protobuf:.*:.*"))
     }
 
-    relocate("co.aikar.acf", "xyz.kyngs.librelogin.lib.acf")
-    relocate("com.github.benmanes.caffeine", "xyz.kyngs.librelogin.lib.caffeine")
-    relocate("com.typesafe.config", "xyz.kyngs.librelogin.lib.hocon")
-    relocate("com.zaxxer.hikari", "xyz.kyngs.librelogin.lib.hikari")
-    relocate("org.mariadb", "xyz.kyngs.librelogin.lib.mariadb")
-    relocate("org.bstats", "xyz.kyngs.librelogin.lib.metrics")
-    relocate("org.intellij", "xyz.kyngs.librelogin.lib.intellij")
-    relocate("org.jetbrains", "xyz.kyngs.librelogin.lib.jetbrains")
-    relocate("io.leangen.geantyref", "xyz.kyngs.librelogin.lib.reflect")
-    relocate("org.spongepowered.configurate", "xyz.kyngs.librelogin.lib.configurate")
-    relocate("net.byteflux.libby", "xyz.kyngs.librelogin.lib.libby")
-    relocate("org.postgresql", "xyz.kyngs.librelogin.lib.postgresql")
-    relocate("com.github.retrooper.packetevents", "xyz.kyngs.librelogin.lib.packetevents.api")
-    relocate("io.github.retrooper.packetevents", "xyz.kyngs.librelogin.lib.packetevents.platform")
+    relocate("co.aikar.acf", "xyz.miguvt.libreloginnext.lib.acf")
+    relocate("com.github.benmanes.caffeine", "xyz.miguvt.libreloginnext.lib.caffeine")
+    relocate("com.typesafe.config", "xyz.miguvt.libreloginnext.lib.hocon")
+    relocate("com.zaxxer.hikari", "xyz.miguvt.libreloginnext.lib.hikari")
+    relocate("org.mariadb", "xyz.miguvt.libreloginnext.lib.mariadb")
+    relocate("org.bstats", "xyz.miguvt.libreloginnext.lib.metrics")
+    relocate("org.intellij", "xyz.miguvt.libreloginnext.lib.intellij")
+    relocate("org.jetbrains", "xyz.miguvt.libreloginnext.lib.jetbrains")
+    relocate("io.leangen.geantyref", "xyz.miguvt.libreloginnext.lib.reflect")
+    relocate("org.spongepowered.configurate", "xyz.miguvt.libreloginnext.lib.configurate")
+    relocate("net.byteflux.libby", "xyz.miguvt.libreloginnext.lib.libby")
+    relocate("org.postgresql", "xyz.miguvt.libreloginnext.lib.postgresql")
+    relocate("com.github.retrooper.packetevents", "xyz.miguvt.libreloginnext.lib.packetevents.api")
+    relocate("io.github.retrooper.packetevents", "xyz.miguvt.libreloginnext.lib.packetevents.platform")
 }
 
 java {

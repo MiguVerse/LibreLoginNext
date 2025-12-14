@@ -129,14 +129,14 @@ public class PaperLibreLoginNext extends AuthenticLibreLoginNext<Player, World> 
         logger = provideLogger();
 
         if (Bukkit.getOnlineMode()) {
-            getLogger().error("!!!The server is running in online mode! LibreLogin won't start unless you set it to false!!!");
+            getLogger().error("!!!The server is running in online mode! LibreLoginNext won't start unless you set it to false!!!");
             disable();
             return;
         }
 
         if (Bukkit.spigot().getSpigotConfig().getBoolean("settings.bungeecord") || Bukkit.spigot().getPaperConfig().getBoolean("settings.velocity-support.enabled")) {
-            getLogger().error("!!!This server is running under a proxy, LibreLogin won't start!!!");
-            getLogger().error("If you want to use LibreLogin under a proxy, place it on the proxy and remove it from the server.");
+            getLogger().error("!!!This server is running under a proxy, LibreLoginNext won't start!!!");
+            getLogger().error("If you want to use LibreLoginNext under a proxy, place it on the proxy and remove it from the server.");
             disable();
             return;
         }

@@ -69,7 +69,7 @@ public class ConfigurationKeys {
             "ignore-max-players-from-backend-ping",
             false,
             """
-                    By default, when choosing available lobby/limbos LibreLogin will rule out all the servers which are full.
+                    By default, when choosing available lobby/limbos LibreLoginNext will rule out all the servers which are full.
                     Sometimes this may not work as expected. In such case, you can enable this option, which will ignore the max players field obtained by pinging the backend server.
                     """,
             ConfigurateHelper::getBoolean
@@ -277,7 +277,7 @@ public class ConfigurationKeys {
 
     public static final ConfigurationKey<String> TOTP_LABEL = new ConfigurationKey<>(
             "totp.label",
-            "LibreLogin Network",
+            "LibreLoginNext Network",
             "The label to be displayed in the 2FA app. Change this to your network name.",
             ConfigurateHelper::getString
     );
@@ -370,7 +370,7 @@ public class ConfigurationKeys {
     );
     public static final ConfigurationKey<String> MAIL_SENDER = new ConfigurationKey<>(
             "mail.sender",
-            "LibreLogin Network",
+            "LibreLoginNext Network",
             "The sender of the email.",
             ConfigurateHelper::getString
     );
@@ -392,7 +392,7 @@ public class ConfigurationKeys {
             true,
             """
                     !!!THIS ONLY AFFECTS PAPER!!!
-                    Verifies whether the IP the players had used when authenticating to Mojang matches the IP they are connecting from. Disabling this may break LibreLogin if the server is running under a reverse proxy/VPN.
+                    Verifies whether the IP the players had used when authenticating to Mojang matches the IP they are connecting from. Disabling this may break LibreLoginNext if the server is running under a reverse proxy/VPN.
                     """,
             ConfigurateHelper::getBoolean
     );

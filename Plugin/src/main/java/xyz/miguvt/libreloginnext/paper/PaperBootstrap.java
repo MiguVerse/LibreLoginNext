@@ -69,7 +69,7 @@ public class PaperBootstrap extends JavaPlugin implements LibreLoginNextProvider
 
     @Override
     public void onEnable() {
-        getLogger().info("Bootstrapping LibreLogin...");
+        getLogger().info("Bootstrapping LibreLoginNext...");
         libreLogin.enable();
     }
 

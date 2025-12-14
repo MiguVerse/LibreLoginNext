@@ -1,7 +1,7 @@
 name: "LibreLoginNext"
 authors: ["miguvt", "kyngs"]
 version: '${version}'
-main: "xyz.kyngs.librelogin.paper.PaperBootstrap"
+main: "xyz.miguvt.libreloginnext.paper.PaperBootstrap"
 api-version: "1.19"
 
 dependencies:

@@ -29,7 +29,7 @@ public class AuthenticSQLiteDatabaseConnector extends AuthenticDatabaseConnector
 
         this.hikariConfig = new HikariConfig();
 
-        hikariConfig.setPoolName("LibreLogin SQLite Pool");
+        hikariConfig.setPoolName("LibreLoginNext SQLite Pool");
         hikariConfig.setDriverClassName("org.sqlite.JDBC");
         hikariConfig.setMaxLifetime(60000);
         hikariConfig.addDataSourceProperty("cachePrepStmts", "true");

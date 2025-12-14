@@ -7,7 +7,7 @@
 package xyz.miguvt.libreloginnext.api;
 
 /**
- * Logger class for LibreLogin.
+ * Logger class for LibreLoginNext.
  *
  * @author kyngs
  */

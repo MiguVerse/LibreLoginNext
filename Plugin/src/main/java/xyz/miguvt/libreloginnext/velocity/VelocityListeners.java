@@ -125,7 +125,7 @@ public class VelocityListeners extends AuthenticListeners<VelocityLibreLoginNext
             } catch (Exception e) {
                 plugin.getLogger().warn("Failed to check if player is coming from Floodgate.");
                 e.printStackTrace();
-                event.setResult(PreLoginEvent.PreLoginComponentResult.denied(Component.text("Internal LibreLogin error")));
+                event.setResult(PreLoginEvent.PreLoginComponentResult.denied(Component.text("Internal LibreLoginNext error")));
                 return;
             }
         }

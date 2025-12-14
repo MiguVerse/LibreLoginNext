@@ -68,7 +68,7 @@ public class PaperPlatformHandle implements PlatformHandle<Player, World> {
         var creator = new WorldCreator(name);
 
         if (limbo) {
-            creator.generator("librelogin:void");
+            creator.generator("libreloginnext:void");
         }
 
         world = Bukkit.createWorld(creator);

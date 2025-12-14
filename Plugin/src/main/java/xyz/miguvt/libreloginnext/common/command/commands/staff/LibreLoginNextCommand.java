@@ -49,7 +49,7 @@ public class LibreLoginNextCommand<P> extends StaffCommand<P> {
     }
 
     @Subcommand("email test")
-    @CommandPermission("librelogin.email.test")
+    @CommandPermission("libreloginnext.email.test")
     @Syntax("{@@syntax.email-test}")
     @CommandCompletion("%autocomplete.email-test")
     public CompletionStage<Void> onEmailTest(Audience audience, String email) {
@@ -63,7 +63,7 @@ public class LibreLoginNextCommand<P> extends StaffCommand<P> {
     }
 
     @Subcommand("dump")
-    @CommandPermission("librelogin.dump")
+    @CommandPermission("libreloginnext.dump")
     public CompletionStage<Void> onDump(Audience audience) {
         return runAsync(() -> {
             audience.sendMessage(getMessage("info-dumping"));
@@ -224,7 +224,7 @@ public class LibreLoginNextCommand<P> extends StaffCommand<P> {
         var id = plugin.getUserOrThrowICA(user.getLastNickname());
 
         if (onlyValid && id != null && !id.reliable()) {
-            plugin.getLogger().warn("Data retrieved from premium provider is not reliable for user %s, can not safely enable premium login. \nPlease verify the correct capitalization using site such as NameMC and then enable it manually using the /librelogin user premium command.".formatted(user.getLastNickname()));
+            plugin.getLogger().warn("Data retrieved from premium provider is not reliable for user %s, can not safely enable premium login. \nPlease verify the correct capitalization using site such as NameMC and then enable it manually using the /libreloginnext user premium command.".formatted(user.getLastNickname()));
             throw new InvalidCommandArgument(plugin.getMessages().getMessage("error-not-paid"));
         }
 
@@ -485,7 +485,7 @@ public class LibreLoginNextCommand<P> extends StaffCommand<P> {
     }
 
     @Subcommand("user alts")
-    @CommandPermission("librelogin.user.alts")
+    @CommandPermission("libreloginnext.user.alts")
     @Syntax("{@@syntax.user-alts}")
     @CommandCompletion("%autocomplete.user-alts")
     public CompletionStage<Void> onUserAlts(Audience audience, String name) {

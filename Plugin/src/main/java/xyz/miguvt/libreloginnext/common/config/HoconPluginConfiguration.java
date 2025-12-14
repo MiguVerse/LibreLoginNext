@@ -47,10 +47,10 @@ public class HoconPluginConfiguration {
                           You can find more information about the format on the sponge wiki:
                           https://docs.spongepowered.org/stable/en/server/getting-started/configuration/hocon.html
                           ----------------------------------------------------------------------------------------
-                          LibreLogin Configuration
+                          LibreLoginNext Configuration
                           ----------------------------------------------------------------------------------------
-                          This is the configuration file for LibreLogin.
-                          You can find more information about LibreLogin on the github page:
+                          This is the configuration file for LibreLoginNext.
+                          You can find more information about LibreLoginNext on the github page:
                           https://github.com/kyngs/LibreLogin
                         """,
                 logger,

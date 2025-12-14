@@ -65,8 +65,8 @@ public class AuthenticEMailHandler implements EmailHandler {
 
     @Override
     public void sendTestMail(String email) {
-        sendEmail(email, "LibreLogin test mail", """
-                Congratulations! You have successfully configured email sending in LibreLogin!<br>
+        sendEmail(email, "LibreLoginNext test mail", """
+                Congratulations! You have successfully configured email sending in LibreLoginNext!<br>
                 Now, your users can reset their passwords.<br>
                 <i>If you have no idea what this means, block the sender.</i>
                 """);

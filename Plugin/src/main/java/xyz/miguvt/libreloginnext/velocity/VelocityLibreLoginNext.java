@@ -187,7 +187,7 @@ public class VelocityLibreLoginNext extends AuthenticLibreLoginNext<Player, Regi
             redisBungee = new VelocityRedisBungeeIntegration();
         }
         super.enable();
-        getLogger().info("LibreLogin version " + getVersion() + " enabled!");
+        getLogger().info("LibreLoginNext version " + getVersion() + " enabled!");
     }
 
     @Override

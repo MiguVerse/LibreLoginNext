@@ -1,3 +1,11 @@
+# LibreLogin-Next
+This is a next-generation version of [LibreLogin](https://github.com/kyngs/LibreLogin), continuing its development with new features, improvements, and bug fixes.
+
+> Continuing the legacy of LibreLogin.
+
+---
+
+# Original README
 
 # LibreLogin
 
