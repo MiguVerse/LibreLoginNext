@@ -22,6 +22,7 @@ import net.byteflux.libby.VelocityLibraryManager;
 import xyz.miguvt.libreloginnext.api.LibreLoginNextPlugin;
 import xyz.miguvt.libreloginnext.api.provider.LibreLoginNextProvider;
 import xyz.miguvt.libreloginnext.api.util.SemanticVersion;
+import xyz.miguvt.libreloginnext.common.BuildConstants;
 
 import org.slf4j.Logger;
 
@@ -33,7 +34,7 @@ import java.util.concurrent.Executors;
 @Plugin(
         id = "libreloginnext",
         name = "LibreLoginNext",
-        version = "@version@",
+        version = BuildConstants.VERSION,
         authors = {"miguvt", "kyngs"},
         dependencies = {
                 @Dependency(id = "floodgate", optional = true),
