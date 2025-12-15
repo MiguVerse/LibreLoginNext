@@ -383,7 +383,7 @@ public class ConfigurationKeys {
     public static final ConfigurationKey<Pattern> ALLOWED_NICKNAME_CHARACTERS = new ConfigurationKey<>(
             "allowed-nickname-characters",
             Pattern.compile("^[a-zA-Z0-9_]{3,16}$"),
-            "Regex pattern of allowed characters in the player name. Don't touch this unless you know what you are doing.",
+            "Regular expression defining valid player name format. Default allows alphanumeric characters and underscores, 3-16 characters in length. Modify with caution as overly permissive patterns may cause compatibility issues.",
             ConfigurateHelper::getPattern,
             ConfigurateHelper::setPattern
     );
