@@ -25,6 +25,7 @@ public class HoconPluginConfiguration {
     private final Logger logger;
     private final Collection<BiHolder<Class<?>, String>> defaultKeys;
     private ConfigurateHelper helper;
+    private boolean migratedFromOldPlugin = false;
 
     public HoconPluginConfiguration(Logger logger, Collection<BiHolder<Class<?>, String>> defaultKeys) {
         this.logger = logger;
@@ -36,12 +37,23 @@ public class HoconPluginConfiguration {
         return helper;
     }
 
+    public void setMigratedFromOldPlugin(boolean migrated) {
+        this.migratedFromOldPlugin = migrated;
+    }
+
+    public boolean isMigratedFromOldPlugin() {
+        return migratedFromOldPlugin;
+    }
+
     public boolean reload(LibreLoginNextPlugin<?, ?> plugin) throws IOException, CorruptedConfigurationException {
-        var adept = new ConfigurateConfiguration(
-                plugin.getDataFolder(),
-                "config.conf",
-                defaultKeys,
-                """
+        String headerComment = migratedFromOldPlugin
+                ? """
+                          !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                          !! YOUR CONFIG WAS AUTOMATICALLY MIGRATED BY LIBRELOGINNEXT !!
+                          !! CONSIDER REGENERATING THE CONFIG AND RECONFIGURING EVERYTHING !!
+                          !! KEEPING THE SAME DATABASE FOR BETTER COMPATIBILITY !!
+                          !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                          
                           !!THIS FILE IS WRITTEN IN THE HOCON FORMAT!!
                           The hocon format is very similar to JSON, but it has some extra features.
                           You can find more information about the format on the sponge wiki:
@@ -51,8 +63,26 @@ public class HoconPluginConfiguration {
                           ----------------------------------------------------------------------------------------
                           This is the configuration file for LibreLoginNext.
                           You can find more information about LibreLoginNext on the github page:
-                          https://github.com/kyngs/LibreLogin
-                        """,
+                          https://github.com/MiguVerse/LibreLoginNext
+                        """
+                : """
+                          !!THIS FILE IS WRITTEN IN THE HOCON FORMAT!!
+                          The hocon format is very similar to JSON, but it has some extra features.
+                          You can find more information about the format on the sponge wiki:
+                          https://docs.spongepowered.org/stable/en/server/getting-started/configuration/hocon.html
+                          ----------------------------------------------------------------------------------------
+                          LibreLoginNext Configuration
+                          ----------------------------------------------------------------------------------------
+                          This is the configuration file for LibreLoginNext.
+                          You can find more information about LibreLoginNext on the github page:
+                          https://github.com/MiguVerse/LibreLoginNext
+                        """;
+        
+        var adept = new ConfigurateConfiguration(
+                plugin.getDataFolder(),
+                "config.conf",
+                defaultKeys,
+                headerComment,
                 logger,
                 new FirstConfigurationMigrator(),
                 new SecondConfigurationMigrator(),
@@ -61,7 +91,8 @@ public class HoconPluginConfiguration {
                 new FifthConfigurationMigrator(),
                 new SixthConfigurationMigrator(),
                 new SeventhConfigurationMigrator(),
-                new EightConfigurationMigrator()
+                new EightConfigurationMigrator(),
+                new NinthConfigurationMigrator()
         );
 
         var helperAdept = adept.getHelper();
