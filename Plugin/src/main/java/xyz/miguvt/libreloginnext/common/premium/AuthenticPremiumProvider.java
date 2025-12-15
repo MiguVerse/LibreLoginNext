@@ -44,7 +44,7 @@ public class AuthenticPremiumProvider implements PremiumProvider {
         fetchers.add(this::getUserFromMojang);
         fetchers.add(this::getUserFromPlayerDB);
         fetchers.add(this::getUserFromMinetools);
-        //fetchers.add(this::getUserFromAshcon); //Momentarily disabled, as it's unreliable. See https://github.com/Electroid/mojang-api/issues/79
+        fetchers.add(this::getUserFromAshcon); //It was disabled a time ago because it was unreliable. See https://github.com/Electroid/mojang-api/issues/79, if issues come back we can disable it again.
     }
 
     @Override
@@ -87,7 +87,6 @@ public class AuthenticPremiumProvider implements PremiumProvider {
         return result;
     }
 
-    @SuppressWarnings("unused") // Kept as fallback API - temporarily disabled due to reliability issues
     private PremiumUser getUserFromAshcon(String name) throws PremiumException {
         try {
             plugin.reportMainThread();
