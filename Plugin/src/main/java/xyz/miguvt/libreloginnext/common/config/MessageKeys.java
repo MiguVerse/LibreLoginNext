@@ -57,7 +57,7 @@ public class MessageKeys {
             "Please, change your username to &c%username%",
             """
                     This message is displayed when the player's username is not in the correct case.
-                    See https://github.com/kyngs/LibreLogin/wiki/Name-Validation for more information.""",
+                    See https://github.com/MiguVerse/LibreLoginNext/wiki/Name-Validation for more information.""",
             ConfigurateHelper::getString
     );
 
@@ -74,7 +74,7 @@ public class MessageKeys {
             "You have illegal characters in your username or/and your username is longer than 16 characters!",
             """
                     This message is displayed when the player's username is not allowed.
-                    See https://github.com/kyngs/LibreLogin/wiki/Name-Validation for more information.""",
+                    See https://github.com/MiguVerse/LibreLoginNext/wiki/Name-Validation for more information.""",
             ConfigurateHelper::getString
     );
 
@@ -83,7 +83,7 @@ public class MessageKeys {
             "Oh no! It looks like an premium user with activated auto login changed their nickname to %nickname%, therefore there are 2 colliding accounts. Please contact support immediately.",
             """
                     This occurs, when there is a profile conflict.
-                    See https://github.com/kyngs/LibreLogin/wiki/Profile-Conflicts for more information.""",
+                    See https://github.com/MiguVerse/LibreLoginNext/wiki/Profile-Conflicts for more information.""",
             ConfigurateHelper::getString
     );
 

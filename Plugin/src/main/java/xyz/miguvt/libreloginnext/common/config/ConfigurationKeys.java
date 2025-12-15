@@ -133,7 +133,7 @@ public class ConfigurationKeys {
             "CRACKED",
             """
                     Sets which method should be used for creating fixed UUID when a new player is created.
-                    See the wiki for further information: https://github.com/kyngs/LibreLogin/wiki/UUID-Creators
+                    See the wiki for further information: https://github.com/MiguVerse/LibreLoginNext/wiki/UUID-Creators
                     Available Creators:
                     RANDOM - Generates a random UUID
                     CRACKED - Generates a UUID based on the player's name, the same method as if the server was in offline mode
@@ -203,7 +203,7 @@ public class ConfigurationKeys {
             "migration",
             """
                     This is used for migrating the database from other plugins.
-                    Please see the wiki for further information: https://github.com/kyngs/LibreLogin/wiki/Database-Migration
+                    Please see the wiki for further information: https://github.com/MiguVerse/LibreLoginNext/wiki/Database-Migration
                     """
     );
 
@@ -270,7 +270,7 @@ public class ConfigurationKeys {
             true,
             """
                     Should we enable TOTP-Based Two-Factor Authentication? If you don't know what this is, this is the 2FA used in applications like Google Authenticator etc.
-                    I heavily suggest you to read this wiki page: https://github.com/kyngs/LibreLogin/wiki/2FA
+                    I heavily suggest you to read this wiki page: https://github.com/MiguVerse/LibreLoginNext/wiki/2FA
                     """,
             ConfigurateHelper::getBoolean
     );
