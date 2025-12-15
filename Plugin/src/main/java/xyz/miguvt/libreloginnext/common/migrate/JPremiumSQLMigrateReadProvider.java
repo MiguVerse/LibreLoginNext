@@ -45,7 +45,7 @@ public class JPremiumSQLMigrateReadProvider extends SQLMigrateReadProvider {
                     if (lastNickname == null) continue; //Yes this may happen
                     var split = rawPassword == null ? null : rawPassword.split("\\$");
 
-                    HashedPassword password = rawPassword == null || split.length < 3 ? null : switch (split[0]) {
+                    HashedPassword password = split == null || split.length < 3 ? null : switch (split[0]) {
                         case "SHA256" -> new HashedPassword(
                                 split[2],
                                 split[1],
@@ -56,7 +56,7 @@ public class JPremiumSQLMigrateReadProvider extends SQLMigrateReadProvider {
                                 split[1],
                                 "SHA-512"
                         );
-                        case "BCRYPT" -> CryptoUtil.convertFromBCryptRaw(rawPassword.replace("BCRYPT", "$2a"));
+                        case "BCRYPT" -> CryptoUtil.convertFromBCryptRaw("$2a$" + split[1] + "$" + split[2]);
                         default -> {
                             logger.error("User %s has invalid algorithm %s, omitting".formatted(lastNickname, split[0]));
                             yield null;
