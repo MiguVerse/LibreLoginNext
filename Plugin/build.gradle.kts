@@ -6,55 +6,55 @@ plugins {
     id("net.kyori.blossom").version("2.2.0")
     id("java-library")
     id("xyz.miguvt.libby.plugin").version("1.2.3")
-    id("xyz.kyngs.mcupload.plugin").version("0.3.4")
+    //id("xyz.kyngs.mcupload.plugin").version("0.3.4")
 }
 
 tasks.withType<JavaCompile> {
     options.encoding = "UTF-8"
 }
 
-mcupload {
-    file = tasks.shadowJar
-    swallowErrors = true
-    platforms {
-        modrinth {
-            loaders = listOf("paper", "purpur", "bungeecord", "waterfall", "velocity")
-            projectId = "tL0SCXYq"
-            gameVersions = listOf(
-                "1.21.11", "1.21.10", "1.21.9", "1.21.8", "1.21.7", "1.21.6", "1.21.5", "1.21.4", "1.21.3", "1.21.2", "1.21.1", "1.21",
-                "1.20.6", "1.20.5", "1.20.4", "1.20.3", "1.20.2", "1.20.1", "1.20",
-                "1.19.4", "1.19.3", "1.19.2", "1.19.1", "1.19",
-                "1.18.2", "1.18.1", "1.18",
-                "1.17.1", "1.17",
-                "1.16.5", "1.16.4", "1.16.3", "1.16.2", "1.16.1", "1.16",
-                "1.15.2", "1.15.1", "1.15",
-                "1.14.4", "1.14.3", "1.14.2", "1.14.1", "1.14",
-                "1.13.2", "1.13.1", "1.13",
-            )
-            token = System.getenv("MODRINTH_TOKEN")
-        }
-        polymart {
-            apiKey = System.getenv("POLYMART_TOKEN")
-            resourceId = "2179"
-        }
-        github {
-            token = System.getenv("GITHUB_TOKEN")
-            repository = "MiguVerse/LibreLoginNext"
-        }
-        discord {
-            webhookUrl = System.getenv("DISCORD_WEBHOOK_URL")
-            configureEmbed {
-                setColor(0x0398FC)
-            }
-        }
-    }
-    datasource {
-        file {
-            readmeFile = "README.md"
-            changelogFile = "CHANGELOG.md"
-        }
-    }
-}
+//mcupload {
+//    file = tasks.shadowJar
+//    swallowErrors = true
+//    platforms {
+//        modrinth {
+//            loaders = listOf("paper", "purpur", "bungeecord", "waterfall", "velocity")
+//            projectId = "tL0SCXYq"
+//            gameVersions = listOf(
+//                "1.21.11", "1.21.10", "1.21.9", "1.21.8", "1.21.7", "1.21.6", "1.21.5", "1.21.4", "1.21.3", "1.21.2", "1.21.1", "1.21",
+//                "1.20.6", "1.20.5", "1.20.4", "1.20.3", "1.20.2", "1.20.1", "1.20",
+//                "1.19.4", "1.19.3", "1.19.2", "1.19.1", "1.19",
+//                "1.18.2", "1.18.1", "1.18",
+//                "1.17.1", "1.17",
+//                "1.16.5", "1.16.4", "1.16.3", "1.16.2", "1.16.1", "1.16",
+//                "1.15.2", "1.15.1", "1.15",
+//                "1.14.4", "1.14.3", "1.14.2", "1.14.1", "1.14",
+//                "1.13.2", "1.13.1", "1.13",
+//            )
+//            token = System.getenv("MODRINTH_TOKEN")
+//        }
+//        polymart {
+//            apiKey = System.getenv("POLYMART_TOKEN")
+//            resourceId = "2179"
+//        }
+//        github {
+//            token = System.getenv("GITHUB_TOKEN")
+//            repository = "MiguVerse/LibreLoginNext"
+//        }
+//        discord {
+//            webhookUrl = System.getenv("DISCORD_WEBHOOK_URL")
+//            configureEmbed {
+//                setColor(0x0398FC)
+//            }
+//        }
+//    }
+//    datasource {
+//        file {
+//            readmeFile = "README.md"
+//            changelogFile = "CHANGELOG.md"
+//        }
+//    }
+//}
 
 repositories {
     // mavenLocal()

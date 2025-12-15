@@ -32,23 +32,13 @@ java {
 }
 
 publishing {
-    repositories {
-        maven {
-            name = "kyngsRepo"
-            url = uri(
-                "https://repo.kyngs.xyz/" + (if (project.version.toString()
-                        .contains("SNAPSHOT")
-                ) "snapshots" else "releases") + "/"
-            )
-            credentials(PasswordCredentials::class)
-            authentication {
-                create<BasicAuthentication>("basic")
-            }
-        }
-    }
     publications {
         create<MavenPublication>("maven") {
             from(components["java"])
+            
+            // JitPack uses com.github.Username as the group
+            // The group and version are set automatically by JitPack
+            // based on the GitHub repository and release tag
         }
     }
 }

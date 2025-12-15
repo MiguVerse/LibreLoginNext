@@ -8,7 +8,7 @@ version '0.25.0'
 
 subprojects {
     version = rootProject.version
-    group = 'xyz.miguvt.libreloginnext'
+    group = 'com.github.MiguVerse.LibreLoginNext'
 
     apply plugin: 'org.cadixdev.licenser'
 

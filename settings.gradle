@@ -1,9 +1,6 @@
 pluginManagement {
     repositories {
         maven {
-            url = uri("https://repo.kyngs.xyz/gradle-plugins")
-        }
-        maven {
             url = uri("https://jitpack.io")
         }
         gradlePluginPortal()
