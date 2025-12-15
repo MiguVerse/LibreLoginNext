@@ -11,7 +11,6 @@ import co.aikar.commands.CommandManager;
 import co.aikar.commands.VelocityCommandIssuer;
 import co.aikar.commands.VelocityCommandManager;
 import com.google.inject.Inject;
-import com.velocitypowered.api.network.ProtocolVersion;
 import com.velocitypowered.api.plugin.PluginDescription;
 import com.velocitypowered.api.plugin.annotation.DataDirectory;
 import com.velocitypowered.api.proxy.Player;
@@ -27,7 +26,7 @@ import xyz.miguvt.libreloginnext.common.AuthenticLibreLoginNext;
 import xyz.miguvt.libreloginnext.common.SLF4JLogger;
 import xyz.miguvt.libreloginnext.common.config.ConfigurationKeys;
 import xyz.miguvt.libreloginnext.common.image.AuthenticImageProjector;
-import xyz.miguvt.libreloginnext.common.image.protocolize.ProtocolizeImageProjector;
+import xyz.miguvt.libreloginnext.common.image.packetevents.PacketEventsImageProjector;
 import xyz.miguvt.libreloginnext.common.util.CancellableTask;
 import xyz.miguvt.libreloginnext.velocity.integration.VelocityNanoLimboIntegration;
 import xyz.miguvt.libreloginnext.api.Logger;
@@ -150,35 +149,8 @@ public class VelocityLibreLoginNext extends AuthenticLibreLoginNext<Player, Regi
 
     @Override
     protected AuthenticImageProjector<Player, RegisteredServer> provideImageProjector() {
-        if (pluginPresent("protocolize")) {
-            var projector = new ProtocolizeImageProjector<>(this);
-            var maxProtocol = ProtocolVersion.MAXIMUM_VERSION.getProtocol();
-
-            if (maxProtocol == 760) {
-                // I hate this so much
-                try {
-                    var split = server.getVersion().getVersion().split("-");
-                    var build = Integer.parseInt(split[split.length - 1].replace("b", ""));
-
-                    if (build < 172) {
-                        logger.warn("Detected protocolize, but in order for the integration to work properly, you must be running Velocity build 172 or newer!");
-                        return null;
-                    }
-                } catch (Exception e) {
-                    // I guess it's probably fine
-                }
-            }
-
-            if (!projector.compatible()) {
-                getLogger().warn("Detected protocolize, however, with incompatible version (2.2.2), please upgrade or downgrade.");
-                return null;
-            }
-            getLogger().info("Detected Protocolize, enabling 2FA...");
-            return projector;
-        } else {
-            logger.warn("Protocolize not found, some features (e.g. 2FA) will not work!");
-            return null;
-        }
+        getLogger().info("PacketEvents detected, enabling 2FA...");
+        return new PacketEventsImageProjector<>(this);
     }
 
     @Override

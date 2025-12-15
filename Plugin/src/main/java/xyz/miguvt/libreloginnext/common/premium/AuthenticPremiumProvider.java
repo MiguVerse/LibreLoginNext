@@ -21,7 +21,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.SocketTimeoutException;
-import java.net.URL;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -87,10 +87,11 @@ public class AuthenticPremiumProvider implements PremiumProvider {
         return result;
     }
 
+    @SuppressWarnings("unused") // Kept as fallback API - temporarily disabled due to reliability issues
     private PremiumUser getUserFromAshcon(String name) throws PremiumException {
         try {
             plugin.reportMainThread();
-            var connection = (HttpURLConnection) new URL("https://api.ashcon.app/mojang/v2/user/" + name).openConnection();
+            var connection = (HttpURLConnection) URI.create("https://api.ashcon.app/mojang/v2/user/" + name).toURL().openConnection();
             connection.setConnectTimeout(5000);
             connection.setReadTimeout(5000);
 
@@ -119,7 +120,7 @@ public class AuthenticPremiumProvider implements PremiumProvider {
     private PremiumUser getUserFromPlayerDB(String name) throws PremiumException {
         try {
             plugin.reportMainThread();
-            var connection = (HttpURLConnection) new URL("https://playerdb.co/api/player/minecraft/" + name).openConnection();
+            var connection = (HttpURLConnection) URI.create("https://playerdb.co/api/player/minecraft/" + name).toURL().openConnection();
             connection.setConnectTimeout(5000);
             connection.setReadTimeout(5000);
 
@@ -152,7 +153,7 @@ public class AuthenticPremiumProvider implements PremiumProvider {
     private PremiumUser getUserFromMinetools(String name) throws PremiumException {
         try {
             plugin.reportMainThread();
-            var connection = (HttpURLConnection) new URL("https://api.minetools.eu/uuid/" + name).openConnection();
+            var connection = (HttpURLConnection) URI.create("https://api.minetools.eu/uuid/" + name).toURL().openConnection();
             connection.setConnectTimeout(5000);
             connection.setReadTimeout(5000);
 
@@ -199,7 +200,7 @@ public class AuthenticPremiumProvider implements PremiumProvider {
     private PremiumUser getUserFromMojang(String name) throws PremiumException {
         try {
             plugin.reportMainThread();
-            var connection = (HttpURLConnection) new URL("https://api.mojang.com/users/profiles/minecraft/" + name).openConnection();
+            var connection = (HttpURLConnection) URI.create("https://api.mojang.com/users/profiles/minecraft/" + name).toURL().openConnection();
             connection.setConnectTimeout(5000);
             connection.setReadTimeout(5000);
 
@@ -241,7 +242,7 @@ public class AuthenticPremiumProvider implements PremiumProvider {
     public PremiumUser getUserForUUID(UUID uuid) throws PremiumException {
         try {
             plugin.reportMainThread();
-            var connection = (HttpURLConnection) new URL("https://sessionserver.mojang.com/session/minecraft/profile/" + uuid.toString()).openConnection();
+            var connection = (HttpURLConnection) URI.create("https://sessionserver.mojang.com/session/minecraft/profile/" + uuid.toString()).toURL().openConnection();
 
             return switch (connection.getResponseCode()) {
                 case 429 ->

@@ -23,12 +23,10 @@ public class Blockers implements Listener {
 
     private final AuthorizationProvider<ProxiedPlayer> authorizationProvider;
     private final HoconPluginConfiguration configuration;
-    private final BungeeCordLibreLoginNext plugin;
 
     public Blockers(BungeeCordLibreLoginNext plugin) {
         this.authorizationProvider = plugin.getAuthorizationProvider();
         this.configuration = plugin.getConfiguration();
-        this.plugin = plugin;
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
@@ -74,9 +72,9 @@ public class Blockers implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onServerKick(ServerKickEvent event) {
         if (!authorizationProvider.isAuthorized(event.getPlayer()) || authorizationProvider.isAwaiting2FA(event.getPlayer())) {
-            var reason = event.getKickReasonComponent();
+            var reason = event.getReason();
             if (reason == null) {
-                event.getPlayer().disconnect("Limbo not running");
+                event.getPlayer().disconnect(new net.md_5.bungee.api.chat.TextComponent("Limbo not running"));
             } else {
                 event.getPlayer().disconnect(reason);
             }

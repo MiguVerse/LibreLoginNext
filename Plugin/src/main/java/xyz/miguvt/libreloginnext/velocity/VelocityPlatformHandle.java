@@ -134,14 +134,15 @@ public class VelocityPlatformHandle implements PlatformHandle<Player, Registered
         return "velocity";
     }
 
+    @SuppressWarnings("null") // Velocity API lacks null annotations
     @Override
     public ProxyData getProxyData() {
         return new ProxyData(
                 plugin.getServer().getVersion().toString(),
                 getServers().stream().map(Object::toString).toList(),
-                plugin.getServer().getPluginManager().getPlugins().stream().map(plugin ->
-                        MoreObjects.toStringHelper(plugin.getInstance().orElse(null))
-                                .add("desc", plugin.getDescription().toString())
+                plugin.getServer().getPluginManager().getPlugins().stream().map(p ->
+                        MoreObjects.toStringHelper(p.getInstance().orElse(null))
+                                .add("desc", p.getDescription().toString())
                                 .toString()
                 ).toList(),
                 plugin.getServerHandler().getLimboServers().stream().map(Object::toString).toList(),

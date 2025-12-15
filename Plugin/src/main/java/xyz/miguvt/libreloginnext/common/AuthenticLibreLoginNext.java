@@ -73,7 +73,7 @@ import xyz.miguvt.libreloginnext.api.util.ThrowableFunction;
 import static xyz.miguvt.libreloginnext.common.config.ConfigurationKeys.*;
 
 import java.io.*;
-import java.net.URL;
+import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.sql.Timestamp;
@@ -345,6 +345,7 @@ public abstract class AuthenticLibreLoginNext<P, S> implements LibreLoginNextPlu
         }
     }
 
+    @SuppressWarnings("unchecked") // Type safety is ensured by the registration process
     public <C extends DatabaseConnector<?, ?>> DatabaseConnectorRegistration<?, C> getDatabaseConnector(Class<C> clazz) {
         return (DatabaseConnectorRegistration<?, C>) databaseConnectors.get(clazz);
     }
@@ -357,6 +358,7 @@ public abstract class AuthenticLibreLoginNext<P, S> implements LibreLoginNextPlu
             if (registration == null) {
                 logger.error("Database type %s doesn't exist, please check your configuration".formatted(configuration.get(DATABASE_TYPE)));
                 shutdownProxy(1);
+                return; // Unreachable but satisfies null analysis
             }
 
             DatabaseConnector<?, ?> connector = null;
@@ -367,6 +369,7 @@ public abstract class AuthenticLibreLoginNext<P, S> implements LibreLoginNextPlu
                 if (connectorRegistration == null) {
                     logger.error("Database type %s is corrupted, please use a different one".formatted(configuration.get(DATABASE_TYPE)));
                     shutdownProxy(1);
+                    return; // Unreachable but satisfies null analysis
                 }
 
                 connector = connectorRegistration.factory().apply("database.properties." + connectorRegistration.id() + ".");
@@ -598,7 +601,7 @@ public abstract class AuthenticLibreLoginNext<P, S> implements LibreLoginNextPlu
 
         if (!file.exists()) {
             logger.info("Forbidden passwords list doesn't exist, downloading...");
-            try (BufferedInputStream in = new BufferedInputStream(new URL("https://raw.githubusercontent.com/MiguVerse/LibreLoginNext/dev/forbidden-passwords.txt").openStream())) {
+            try (BufferedInputStream in = new BufferedInputStream(URI.create("https://raw.githubusercontent.com/MiguVerse/LibreLoginNext/dev/forbidden-passwords.txt").toURL().openStream())) {
                 if (!file.createNewFile()) {
                     throw new IOException("Failed to create file");
                 }
@@ -632,7 +635,7 @@ public abstract class AuthenticLibreLoginNext<P, S> implements LibreLoginNextPlu
         logger.info("Checking for updates...");
 
         try {
-            var connection = new URL("https://api.github.com/repos/miguverse/LibreLoginNext/releases").openConnection();
+            var connection = URI.create("https://api.github.com/repos/miguverse/LibreLoginNext/releases").toURL().openConnection();
 
             connection.setRequestProperty("User-Agent", "LibreLoginNext");
 
@@ -793,6 +796,7 @@ public abstract class AuthenticLibreLoginNext<P, S> implements LibreLoginNextPlu
     }
 
     public void onExit(P player) {
+        Objects.requireNonNull(player, "player cannot be null");
         cancelOnExit.removeAll(player).forEach(CancellableTask::cancel);
         if (configuration.get(REMEMBER_LAST_SERVER)) {
             var server = platformHandle.getPlayersServerName(player);
@@ -806,6 +810,8 @@ public abstract class AuthenticLibreLoginNext<P, S> implements LibreLoginNextPlu
     }
 
     public void cancelOnExit(CancellableTask task, P player) {
+        Objects.requireNonNull(task, "task cannot be null");
+        Objects.requireNonNull(player, "player cannot be null");
         cancelOnExit.put(player, task);
     }
 

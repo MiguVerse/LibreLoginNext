@@ -283,7 +283,8 @@ public class AuthenticListeners<Plugin extends AuthenticLibreLoginNext<P, S>, P,
             ip = platformHandle.getIP(player);
         }
 
-        if (fromFloodgate || user.autoLoginEnabled() || (sessionTime != null && user.getLastAuthentication() != null && ip.equals(user.getIp()) && user.getLastAuthentication().toLocalDateTime().plus(sessionTime).isAfter(LocalDateTime.now()))) {
+        // user can be null if fromFloodgate is true, handle appropriately
+        if (user == null || fromFloodgate || user.autoLoginEnabled() || (sessionTime != null && user.getLastAuthentication() != null && ip.equals(user.getIp()) && user.getLastAuthentication().toLocalDateTime().plus(sessionTime).isAfter(LocalDateTime.now()))) {
             return new BiHolder<>(true, plugin.getServerHandler().chooseLobbyServer(user, player, true, false));
         } else {
             return new BiHolder<>(false, plugin.getServerHandler().chooseLimboServer(user, player));

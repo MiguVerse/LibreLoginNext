@@ -23,6 +23,7 @@ tasks.test {
 
 tasks.withType<JavaCompile> {
     options.compilerArgs.add("-parameters")
+    options.compilerArgs.addAll(listOf("-Xlint:deprecation", "-Xlint:unchecked"))
 }
 
 java {

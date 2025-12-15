@@ -19,6 +19,7 @@ import xyz.miguvt.libreloginnext.common.util.GeneralUtil;
 import xyz.miguvt.libreloginnext.api.event.exception.EventCancelledException;
 
 import java.lang.reflect.Field;
+import java.net.InetSocketAddress;
 import java.util.NoSuchElementException;
 
 import static net.md_5.bungee.event.EventPriority.HIGHEST;
@@ -57,13 +58,13 @@ public class BungeeCordListener extends AuthenticListeners<BungeeCordLibreLoginN
         if (plugin.fromFloodgate(event.getConnection().getUniqueId())) return;
 
         runAsyncEvent(event, () -> {
-            var result = onPreLogin(event.getConnection().getName(), event.getConnection().getAddress().getAddress());
+            var result = onPreLogin(event.getConnection().getName(), ((InetSocketAddress) event.getConnection().getSocketAddress()).getAddress());
 
             switch (result.state()) {
                 case DENIED -> {
                     assert result.message() != null;
                     event.setCancelled(true);
-                    event.setCancelReason(plugin.getSerializer().serialize(result.message()));
+                    event.setReason(plugin.getSerializer().serialize(result.message())[0]);
                 }
                 case FORCE_ONLINE -> event.getConnection().setOnlineMode(true);
                 case FORCE_OFFLINE -> event.getConnection().setOnlineMode(false);
@@ -126,14 +127,14 @@ public class BungeeCordListener extends AuthenticListeners<BungeeCordLibreLoginN
 
     @EventHandler(priority = LOW)
     public void onKick(ServerKickEvent event) {
-        var reason = plugin.getSerializer().deserialize(event.getKickReasonComponent());
-        var message = plugin.getMessages().getMessage("info-kick").replaceText(builder -> builder.matchLiteral("%reason%").replacement(reason));
+        var reasonComponent = plugin.getSerializer().deserialize(new net.md_5.bungee.api.chat.BaseComponent[]{event.getReason()});
+        var message = plugin.getMessages().getMessage("info-kick").replaceText(builder -> builder.matchLiteral("%reason%").replacement(reasonComponent));
         var player = event.getPlayer();
         var audience = platformHandle.getAudienceForPlayer(event.getPlayer());
 
         if (event.getState() == ServerKickEvent.State.CONNECTED) {
             if (!plugin.getConfiguration().get(ConfigurationKeys.FALLBACK)) {
-                event.setKickReasonComponent(plugin.getSerializer().serialize(message));
+                event.setReason(plugin.getSerializer().serialize(message)[0]);
                 event.setCancelled(false);
             } else {
                 try {
@@ -144,7 +145,7 @@ public class BungeeCordListener extends AuthenticListeners<BungeeCordLibreLoginN
                     event.setCancelled(true);
                     event.setCancelServer(server);
                 } catch (NoSuchElementException | EventCancelledException e) {
-                    event.setKickReasonComponent(plugin.getSerializer().serialize(message));
+                    event.setReason(plugin.getSerializer().serialize(message)[0]);
                     event.setCancelled(false);
                 }
             }

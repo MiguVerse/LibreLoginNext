@@ -32,6 +32,7 @@ public record ReadDatabaseProviderRegistration<R extends ReadDatabaseProvider, C
      * @return the created object
      * @throws E if an error occurs during the creation process
      */
+    @SuppressWarnings("unchecked") // Type safety is ensured by the caller providing the correct connector type
     public R create(DatabaseConnector<?, ?> connector) throws E {
         return factory.apply((C) connector);
     }

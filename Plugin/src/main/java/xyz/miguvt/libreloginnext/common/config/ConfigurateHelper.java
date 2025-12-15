@@ -66,6 +66,7 @@ public record ConfigurateHelper(CommentedConfigurationNode configuration) {
         });
     }
 
+    @SuppressWarnings("null") // Configuration values are validated non-null before use
     public Multimap<String, String> getServerMap(String path) {
         return configurationFunction(path, node -> {
             if (!node.isMap()) throw new CorruptedConfigurationException("Node is not a map!");
@@ -107,6 +108,7 @@ public record ConfigurateHelper(CommentedConfigurationNode configuration) {
         }
     }
 
+    @SuppressWarnings("null") // Splitter.splitToList never returns null elements
     public CommentedConfigurationNode resolve(String key) {
         return configuration.node(Splitter.on('.').splitToList(key).toArray());
     }

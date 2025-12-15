@@ -28,6 +28,7 @@ public class AuthenticEventProvider<P, S> extends AuthenticHandler<P, S> impleme
     }
 
     @Override
+    @SuppressWarnings("unchecked") // Type safety is guaranteed by EventType parameter matching
     public <E extends Event<P, S>> Consumer<E> subscribe(EventType<P, S, E> type, Consumer<E> handler) {
         listeners.computeIfAbsent(type, x -> new HashSet<>()).add((Consumer<Event<P, S>>) handler);
         return handler;
@@ -49,6 +50,7 @@ public class AuthenticEventProvider<P, S> extends AuthenticHandler<P, S> impleme
         }
     }
 
+    @SuppressWarnings("unchecked") // This method is intentionally unsafe - used for cross-type event firing
     public void unsafeFire(EventType<?, ?, ?> type, Event<?, ?> event) {
         var set = listeners.get(type);
 

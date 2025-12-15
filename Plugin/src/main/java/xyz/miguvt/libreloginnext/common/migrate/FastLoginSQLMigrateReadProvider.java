@@ -46,7 +46,9 @@ public class FastLoginSQLMigrateReadProvider extends SQLMigrateReadProvider {
                     var premiumUUID = GeneralUtil.fromUnDashedUUID(rs.getString("UUID"));
                     var name = rs.getString("Name");
 
-                    premiumUsers.put(premiumUUID, name);
+                    if (premiumUUID != null && name != null) {
+                        premiumUsers.put(premiumUUID, name);
+                    }
                 } catch (Exception e) {
                     logger.error("Error while migrating user from FastLogin db, omitting");
                 }

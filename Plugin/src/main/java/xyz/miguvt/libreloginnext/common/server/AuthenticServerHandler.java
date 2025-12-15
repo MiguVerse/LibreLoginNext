@@ -26,6 +26,7 @@ import static xyz.miguvt.libreloginnext.common.config.ConfigurationKeys.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.Objects;
 import java.util.Optional;
 
 public class AuthenticServerHandler<P, S> implements ServerHandler<P, S> {
@@ -174,6 +175,8 @@ public class AuthenticServerHandler<P, S> implements ServerHandler<P, S> {
 
     @Override
     public void registerLobbyServer(S server, String forcedHost) {
+        Objects.requireNonNull(server, "server cannot be null");
+        Objects.requireNonNull(forcedHost, "forcedHost cannot be null");
         getLatestPing(server);
         lobbyServers.put(forcedHost, server);
     }

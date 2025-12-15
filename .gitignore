@@ -76,3 +76,6 @@ $RECYCLE.BIN/
 *.lnk
 
 Testing/
+
+### VS Code ###
+.vscode/

@@ -168,6 +168,9 @@ public final class EncryptionUtil {
     private static PublicKey loadMojangSessionKey()
             throws IOException, NoSuchAlgorithmException, InvalidKeySpecException {
         var keyUrl = PaperBootstrap.class.getClassLoader().getResource("yggdrasil_session_pubkey.der");
+        if (keyUrl == null) {
+            throw new IOException("Could not find yggdrasil_session_pubkey.der in classpath");
+        }
         var keyData = Resources.toByteArray(keyUrl);
         var keySpec = new X509EncodedKeySpec(keyData);
 
@@ -182,8 +185,8 @@ public final class EncryptionUtil {
         return cipher.doFinal(data);
     }
 
+    @SuppressWarnings({"deprecation", "null"}) // SHA1 is required for Mojang protocol, encoded bytes are non-null
     private static byte[] getServerIdHash(String sessionId, PublicKey publicKey, SecretKey sharedSecret) {
-        @SuppressWarnings("deprecation")
         Hasher hasher = Hashing.sha1().newHasher();
 
         hasher.putBytes(sessionId.getBytes(StandardCharsets.ISO_8859_1));

@@ -26,7 +26,7 @@ import xyz.miguvt.libreloginnext.bungeecord.integration.BungeeNanoLimboIntegrati
 import xyz.miguvt.libreloginnext.common.AuthenticLibreLoginNext;
 import xyz.miguvt.libreloginnext.common.config.ConfigurationKeys;
 import xyz.miguvt.libreloginnext.common.image.AuthenticImageProjector;
-import xyz.miguvt.libreloginnext.common.image.protocolize.ProtocolizeImageProjector;
+import xyz.miguvt.libreloginnext.common.image.packetevents.PacketEventsImageProjector;
 import xyz.miguvt.libreloginnext.common.util.CancellableTask;
 import xyz.miguvt.libreloginnext.api.Logger;
 import xyz.miguvt.libreloginnext.api.PlatformHandle;
@@ -70,8 +70,12 @@ public class BungeeCordLibreLoginNext extends AuthenticLibreLoginNext<ProxiedPla
     @Override
     protected void enable() {
         this.adventure = BungeeAudiences.create(bootstrap);
+        // Note: emitLegacyHoverEvent() is deprecated but required for BungeeCord compatibility
+        // with older clients that don't support modern hover events
+        @SuppressWarnings("deprecation")
+        var gsonSerializer = GsonComponentSerializer.builder().downsampleColors().emitLegacyHoverEvent().build();
         this.serializer = BungeeComponentSerializer.of(
-                GsonComponentSerializer.builder().downsampleColors().emitLegacyHoverEvent().build(),
+                gsonSerializer,
                 LegacyComponentSerializer.builder().flattener(adventure.flattener()).build()
         );
 
@@ -155,18 +159,8 @@ public class BungeeCordLibreLoginNext extends AuthenticLibreLoginNext<ProxiedPla
 
     @Override
     protected AuthenticImageProjector<ProxiedPlayer, ServerInfo> provideImageProjector() {
-        if (pluginPresent("Protocolize")) {
-            var projector = new ProtocolizeImageProjector<>(this);
-            if (!projector.compatible()) {
-                getLogger().warn("Detected protocolize, however with incompatible version (2.2.2), please upgrade or downgrade.");
-                return null;
-            }
-            getLogger().info("Detected Protocolize, enabling 2FA...");
-            return new ProtocolizeImageProjector<>(this);
-        } else {
-            getLogger().warn("Protocolize not found, some features (e.g. 2FA) will not work!");
-            return null;
-        }
+        getLogger().info("PacketEvents detected, enabling 2FA...");
+        return new PacketEventsImageProjector<>(this);
     }
 
 

@@ -22,6 +22,7 @@ import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -47,6 +48,7 @@ import static xyz.miguvt.libreloginnext.paper.protocol.ProtocolUtil.getServerVer
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.net.*;
+import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.security.*;
 import java.util.Optional;
@@ -107,6 +109,12 @@ public class PaperListeners extends AuthenticListeners<PaperLibreLoginNext, Play
         GeneralUtil.runAsync(() -> onPlayerDisconnect(event.getPlayer()));
     }
 
+    /**
+     * Captures the player's IP address on login for later use.
+     * Note: PlayerLoginEvent is deprecated since 1.21.6 but no direct replacement exists yet.
+     * This will need to be migrated when Paper provides an alternative API.
+     */
+    @SuppressWarnings("deprecation")
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onPostLogin(PlayerLoginEvent event) {
         ipCache.put(event.getPlayer(), event.getAddress().getHostAddress());
@@ -136,6 +144,12 @@ public class PaperListeners extends AuthenticListeners<PaperLibreLoginNext, Play
         readOnlyUserCache.put(user.getUuid(), user);
     }
 
+    /**
+     * Chooses the initial world/spawn location for players.
+     * Note: PlayerSpawnLocationEvent is deprecated and marked for removal in 1.21.9.
+     * This will need to be migrated to the new spawn location API when available.
+     */
+    @SuppressWarnings("removal")
     @EventHandler(priority = EventPriority.HIGHEST)
     public void chooseWorld(PlayerSpawnLocationEvent event) {
         var ip = ipCache.getIfPresent(event.getPlayer());
@@ -151,9 +165,12 @@ public class PaperListeners extends AuthenticListeners<PaperLibreLoginNext, Play
         } else {
             if (event.getPlayer().getHealth() == 0) {
                 //Fixes bug where player is dead when logging in
-                event.getPlayer().setHealth(event.getPlayer().getMaxHealth());
-                var bed = event.getPlayer().getBedSpawnLocation();
-                event.setSpawnLocation(bed == null ? world.value().getSpawnLocation() : bed);
+                var maxHealthAttr = event.getPlayer().getAttribute(Attribute.MAX_HEALTH);
+                if (maxHealthAttr != null) {
+                    event.getPlayer().setHealth(maxHealthAttr.getValue());
+                }
+                var respawnLoc = event.getPlayer().getRespawnLocation();
+                event.setSpawnLocation(respawnLoc == null ? world.value().getSpawnLocation() : respawnLoc);
             }
             //This is terrible, but should work
             if (event.getPlayer().hasPlayedBefore() && !plugin.getConfiguration().get(ConfigurationKeys.LIMBO).contains(event.getSpawnLocation().getWorld().getName())) {
@@ -357,7 +374,7 @@ public class PaperListeners extends AuthenticListeners<PaperLibreLoginNext, Play
             url = String.format("https://sessionserver.mojang.com/session/minecraft/hasJoined?username=%s&serverId=%s&ip=%s", username, serverHash, encodedIP);
         }
 
-        var conn = (HttpURLConnection) new URL(url).openConnection();
+        var conn = (HttpURLConnection) URI.create(url).toURL().openConnection();
         conn.setConnectTimeout(5000);
         conn.setReadTimeout(5000);
         conn.connect();

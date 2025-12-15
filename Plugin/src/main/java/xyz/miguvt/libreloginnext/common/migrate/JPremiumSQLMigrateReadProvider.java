@@ -45,7 +45,7 @@ public class JPremiumSQLMigrateReadProvider extends SQLMigrateReadProvider {
                     if (lastNickname == null) continue; //Yes this may happen
                     var split = rawPassword == null ? null : rawPassword.split("\\$");
 
-                    HashedPassword password = rawPassword == null ? null : switch (split[0]) {
+                    HashedPassword password = rawPassword == null || split == null || split.length < 3 ? null : switch (split[0]) {
                         case "SHA256" -> new HashedPassword(
                                 split[2],
                                 split[1],

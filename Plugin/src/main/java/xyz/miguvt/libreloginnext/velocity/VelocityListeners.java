@@ -6,7 +6,6 @@
 
 package xyz.miguvt.libreloginnext.velocity;
 
-import com.velocitypowered.api.event.PostOrder;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.connection.DisconnectEvent;
 import com.velocitypowered.api.event.connection.PostLoginEvent;
@@ -78,7 +77,7 @@ public class VelocityListeners extends AuthenticListeners<VelocityLibreLoginNext
         super(plugin);
     }
 
-    @Subscribe(order = PostOrder.LAST)
+    @Subscribe(priority = Short.MAX_VALUE)
     public void onPostLogin(PostLoginEvent event) {
         onPostLogin(event.getPlayer(), null);
     }
@@ -88,7 +87,7 @@ public class VelocityListeners extends AuthenticListeners<VelocityLibreLoginNext
         onPlayerDisconnect(event.getPlayer());
     }
 
-    @Subscribe(order = PostOrder.NORMAL)
+    @Subscribe
     public void onProfileRequest(GameProfileRequestEvent event) {
         var existing = event.getGameProfile();
 
@@ -101,7 +100,7 @@ public class VelocityListeners extends AuthenticListeners<VelocityLibreLoginNext
         event.setGameProfile(new GameProfile(profile.getUuid(), gProfile.getName(), gProfile.getProperties()));
     }
 
-    @Subscribe(order = PostOrder.LAST)
+    @Subscribe(priority = Short.MAX_VALUE)
     public void onPreLogin(PreLoginEvent event) {
 
         if (!event.getResult().isAllowed())
@@ -145,7 +144,7 @@ public class VelocityListeners extends AuthenticListeners<VelocityLibreLoginNext
 
     }
 
-    @Subscribe(order = PostOrder.LAST)
+    @Subscribe(priority = Short.MAX_VALUE)
     public void chooseServer(PlayerChooseInitialServerEvent event) {
         var server = chooseServer(event.getPlayer(), null, null);
 
@@ -158,7 +157,8 @@ public class VelocityListeners extends AuthenticListeners<VelocityLibreLoginNext
 
     }
 
-    @Subscribe(order = PostOrder.EARLY)
+    @SuppressWarnings("null") // Velocity API lacks null annotations
+    @Subscribe(priority = -16384)
     public void onKick(KickedFromServerEvent event) {
         var reason = event.getServerKickReason().orElse(Component.text("null"));
         var message = plugin.getMessages().getMessage("info-kick").replaceText(builder -> builder.matchLiteral("%reason%").replacement(reason));

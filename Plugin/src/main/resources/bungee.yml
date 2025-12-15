@@ -6,5 +6,5 @@ softDepends:
   - "RedisBungee"
   - "floodgate"
   - "LuckPerms"
-  - "Protocolize"
+  - "PacketEvents"
   - "NanoLimboBungee"

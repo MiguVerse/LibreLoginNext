@@ -6,6 +6,7 @@
 
 package xyz.miguvt.libreloginnext.velocity;
 
+import com.github.retrooper.packetevents.PacketEvents;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.velocitypowered.api.event.Subscribe;
@@ -18,6 +19,7 @@ import com.velocitypowered.api.plugin.PluginDescription;
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ProxyServer;
 import com.velocitypowered.api.proxy.server.RegisteredServer;
+import io.github.retrooper.packetevents.velocity.factory.VelocityPacketEventsBuilder;
 import net.byteflux.libby.VelocityLibraryManager;
 import xyz.miguvt.libreloginnext.api.LibreLoginNextPlugin;
 import xyz.miguvt.libreloginnext.api.provider.LibreLoginNextProvider;
@@ -39,7 +41,6 @@ import java.util.concurrent.Executors;
         dependencies = {
                 @Dependency(id = "floodgate", optional = true),
                 @Dependency(id = "luckperms", optional = true),
-                @Dependency(id = "protocolize", optional = true),
                 @Dependency(id = "redisbungee", optional = true),
                 @Dependency(id = "nanolimbovelocity", optional = true)
         }
@@ -50,11 +51,17 @@ public class VelocityBootstrap implements LibreLoginNextProvider<Player, Registe
     PluginDescription pluginDescription;
 
     ProxyServer server;
+    PluginContainer container;
+    Logger logger;
+    Path dataDirectory;
     private final VelocityLibreLoginNext libreLoginNext;
 
     @Inject
-    public VelocityBootstrap(ProxyServer server, Injector injector, Logger logger, PluginContainer container) {
+    public VelocityBootstrap(ProxyServer server, Injector injector, Logger logger, PluginContainer container, @com.velocitypowered.api.plugin.annotation.DataDirectory Path dataDirectory) {
         this.server = server;
+        this.container = container;
+        this.logger = logger;
+        this.dataDirectory = dataDirectory;
 
         // This is a very ugly hack to be able to load libraries in the constructor
         // We cannot pass this as a parameter to the constructor because the plugin is technically still not loaded
@@ -81,12 +88,21 @@ public class VelocityBootstrap implements LibreLoginNextProvider<Player, Registe
 
         libraryManager.configureFromJSON();
 
+        // Initialize PacketEvents after libraries are loaded
+        PacketEvents.setAPI(VelocityPacketEventsBuilder.build(server, container, logger, dataDirectory));
+        PacketEvents.getAPI().getSettings()
+                .checkForUpdates(false);
+        PacketEvents.getAPI().load();
+
         libreLoginNext = new VelocityLibreLoginNext(this);
         injector.injectMembers(libreLoginNext);
     }
 
     @Subscribe
     public void onInitialization(ProxyInitializeEvent event) {
+        // Initialize PacketEvents
+        PacketEvents.getAPI().init();
+
         libreLoginNext.enable();
 
         server.getEventManager().register(this, new Blockers(libreLoginNext.getAuthorizationProvider(), libreLoginNext.getConfiguration(), libreLoginNext.getMessages()));
@@ -112,5 +128,6 @@ public class VelocityBootstrap implements LibreLoginNextProvider<Player, Registe
     @Subscribe
     public void onShutdown(ProxyShutdownEvent event) {
         libreLoginNext.disable();
+        PacketEvents.getAPI().terminate();
     }
 }

@@ -168,7 +168,6 @@ dependencies {
     libby("org.spongepowered:configurate-hocon:4.2.0")
     libby("at.favre.lib:bcrypt:0.10.2")
     libby("dev.samstevens.totp:totp:1.7.1")
-    compileOnly("dev.simplix:protocolize-api:2.4.2")
     libby("org.bouncycastle:bcprov-jdk18on:1.83")
     libby("org.apache.commons:commons-email:1.6.0")
     // DO NOT UPGRADE TO 4.15.0 OR ABOVE BEFORE TESTING WATERFALL AND BUNGEECORD COMPATIBILITY!!!
@@ -196,6 +195,11 @@ dependencies {
     compileOnly("io.papermc.paper:paper-api:1.21.11-R0.1-SNAPSHOT")
     //compileOnly "com.comphenix.protocol:ProtocolLib:5.1.0"
     libby("com.github.retrooper:packetevents-spigot:2.11.0")
+
+    //PacketEvents for Velocity and BungeeCord
+    libby("com.github.retrooper:packetevents-velocity:2.11.0")
+    libby("com.github.retrooper:packetevents-bungeecord:2.11.0")
+
     compileOnly("io.netty:netty-transport:4.2.8.Final")
     compileOnly("com.mojang:datafixerupper:8.0.16") //I hate this so much
     compileOnly("org.apache.logging.log4j:log4j-core:2.25.2")

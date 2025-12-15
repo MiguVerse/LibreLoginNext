@@ -50,6 +50,12 @@ public class PaperPlatformHandle implements PlatformHandle<Player, World> {
         PaperUtil.runSyncAndWait(() -> player.kick(reason), plugin);
     }
 
+    /**
+     * Gets or creates a world/server for the given name.
+     * Note: Contains deprecated API calls (setKeepSpawnInMemory, GameRule constants) that are
+     * marked for removal in future Paper versions. These will need migration when alternatives exist.
+     */
+    @SuppressWarnings("removal")
     @Override
     public World getServer(String name, boolean limbo) {
         var world = Bukkit.getWorld(name);
@@ -75,6 +81,8 @@ public class PaperPlatformHandle implements PlatformHandle<Player, World> {
 
         if (limbo) {
             world.setSpawnLocation(new Location(world, 0.5, world.getHighestBlockYAt(0, 0) + 1, 0.5));
+            // Note: setKeepSpawnInMemory is deprecated for removal in 1.20.5, but no direct replacement exists.
+            // This ensures spawn chunks remain loaded for limbo functionality.
             world.setKeepSpawnInMemory(true);
             world.setGameRule(GameRule.DO_DAYLIGHT_CYCLE, false);
             world.setGameRule(GameRule.DO_INSOMNIA, false);
@@ -138,16 +146,17 @@ public class PaperPlatformHandle implements PlatformHandle<Player, World> {
         return "paper";
     }
 
+    @SuppressWarnings("null") // Bukkit API lacks null annotations
     @Override
     public ProxyData getProxyData() {
         return new ProxyData(
                 Bukkit.getName() + " " + Bukkit.getVersion(),
                 getServers().stream().map(this::fromWorld).toList(),
-                Arrays.stream(Bukkit.getPluginManager().getPlugins()).map(plugin ->
-                        MoreObjects.toStringHelper(plugin)
-                                .add("name", plugin.getName())
-                                .add("version", plugin.getDescription().getVersion())
-                                .add("authors", plugin.getDescription().getAuthors())
+                Arrays.stream(Bukkit.getPluginManager().getPlugins()).map(p ->
+                        MoreObjects.toStringHelper(p)
+                                .add("name", p.getName())
+                                .add("version", p.getPluginMeta().getVersion())
+                                .add("authors", p.getPluginMeta().getAuthors())
                                 .toString()
                 ).toList(),
                 plugin.getServerHandler().getLimboServers().stream().map(this::fromWorld).toList(),
@@ -155,6 +164,7 @@ public class PaperPlatformHandle implements PlatformHandle<Player, World> {
         );
     }
 
+    @SuppressWarnings("null") // Bukkit API lacks null annotations
     private String fromWorld(World world) {
         return MoreObjects.toStringHelper(world)
                 .add("name", world.getName())

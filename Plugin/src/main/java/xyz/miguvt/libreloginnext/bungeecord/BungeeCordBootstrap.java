@@ -6,6 +6,8 @@
 
 package xyz.miguvt.libreloginnext.bungeecord;
 
+import com.github.retrooper.packetevents.PacketEvents;
+import io.github.retrooper.packetevents.bungee.factory.BungeePacketEventsBuilder;
 import net.byteflux.libby.BungeeLibraryManager;
 import net.md_5.bungee.api.config.ServerInfo;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
@@ -25,17 +27,27 @@ public class BungeeCordBootstrap extends Plugin implements LibreLoginNextProvide
 
         libraryManager.configureFromJSON();
 
+        // Initialize PacketEvents after libraries are loaded
+        PacketEvents.setAPI(BungeePacketEventsBuilder.build(this));
+        PacketEvents.getAPI().getSettings()
+                .checkForUpdates(false);
+        PacketEvents.getAPI().load();
+
         libreLoginNext = new BungeeCordLibreLoginNext(this);
     }
 
     @Override
     public void onEnable() {
+        // Initialize PacketEvents
+        PacketEvents.getAPI().init();
+
         libreLoginNext.enable();
     }
 
     @Override
     public void onDisable() {
         libreLoginNext.disable();
+        PacketEvents.getAPI().terminate();
     }
 
     @Override

@@ -48,8 +48,7 @@ public class PaperLibreLoginNext extends AuthenticLibreLoginNext<Player, World> 
         PacketEvents.setAPI(SpigotPacketEventsBuilder.build(bootstrap));
 
         PacketEvents.getAPI().getSettings()
-                .checkForUpdates(false)
-                .bStats(false);
+                .checkForUpdates(false);
 
         PacketEvents.getAPI().load();
     }
@@ -70,7 +69,7 @@ public class PaperLibreLoginNext extends AuthenticLibreLoginNext<Player, World> 
 
     @Override
     public String getVersion() {
-        return bootstrap.getDescription().getVersion();
+        return bootstrap.getPluginMeta().getVersion();
     }
 
     @Override
@@ -115,6 +114,22 @@ public class PaperLibreLoginNext extends AuthenticLibreLoginNext<Player, World> 
         return bukkitIssuer.getPlayer();
     }
 
+    /**
+     * Checks if the server is running under a proxy (BungeeCord or Velocity).
+     * Note: Uses deprecated Spigot API methods that are marked for removal in 1.21.4.
+     * This will need to be updated when Paper provides an alternative configuration API.
+     */
+    @SuppressWarnings("removal")
+    private boolean isRunningUnderProxy() {
+        try {
+            return Bukkit.spigot().getSpigotConfig().getBoolean("settings.bungeecord") 
+                || Bukkit.spigot().getPaperConfig().getBoolean("settings.velocity-support.enabled");
+        } catch (Exception e) {
+            // If the config methods fail, assume not running under proxy
+            return false;
+        }
+    }
+
     @Override
     protected void disable() {
         PacketEvents.getAPI().terminate();
@@ -134,7 +149,8 @@ public class PaperLibreLoginNext extends AuthenticLibreLoginNext<Player, World> 
             return;
         }
 
-        if (Bukkit.spigot().getSpigotConfig().getBoolean("settings.bungeecord") || Bukkit.spigot().getPaperConfig().getBoolean("settings.velocity-support.enabled")) {
+        // Check if running under a proxy - using deprecated API until Paper provides alternative
+        if (isRunningUnderProxy()) {
             getLogger().error("!!!This server is running under a proxy, LibreLoginNext won't start!!!");
             getLogger().error("If you want to use LibreLoginNext under a proxy, place it on the proxy and remove it from the server.");
             disable();

@@ -14,6 +14,7 @@ import net.md_5.bungee.api.connection.ProxiedPlayer;
 import xyz.miguvt.libreloginnext.api.PlatformHandle;
 import xyz.miguvt.libreloginnext.api.server.ServerPing;
 
+import java.net.InetSocketAddress;
 import java.util.Collection;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
@@ -87,7 +88,7 @@ public class BungeeCordPlatformHandle implements PlatformHandle<ProxiedPlayer, S
 
     @Override
     public String getIP(ProxiedPlayer player) {
-        return player.getAddress().getAddress().getHostAddress();
+        return ((InetSocketAddress) player.getSocketAddress()).getAddress().getHostAddress();
     }
 
     @Override
@@ -153,17 +154,18 @@ public class BungeeCordPlatformHandle implements PlatformHandle<ProxiedPlayer, S
         return "bungeecord";
     }
 
+    @SuppressWarnings("null") // BungeeCord API lacks null annotations
     @Override
     public ProxyData getProxyData() {
         return new ProxyData(
                 plugin.getBootstrap().getProxy().getName() + " " + plugin.getBootstrap().getProxy().getVersion(),
                 getServers().stream().map(this::fromServer).toList(),
-                plugin.getBootstrap().getProxy().getPluginManager().getPlugins().stream().map(plugin ->
-                        MoreObjects.toStringHelper(plugin)
-                                .add("name", plugin.getDescription().getName())
-                                .add("version", plugin.getDescription().getVersion())
-                                .add("author", plugin.getDescription().getAuthor())
-                                .add("main", plugin.getDescription().getMain())
+                plugin.getBootstrap().getProxy().getPluginManager().getPlugins().stream().map(p ->
+                        MoreObjects.toStringHelper(p)
+                                .add("name", p.getDescription().getName())
+                                .add("version", p.getDescription().getVersion())
+                                .add("author", p.getDescription().getAuthor())
+                                .add("main", p.getDescription().getMain())
                                 .toString()
                 ).toList(),
                 plugin.getServerHandler().getLimboServers().stream().map(this::fromServer).toList(),
@@ -171,11 +173,12 @@ public class BungeeCordPlatformHandle implements PlatformHandle<ProxiedPlayer, S
         );
     }
 
+    @SuppressWarnings("null") // BungeeCord API lacks null annotations
     private String fromServer(ServerInfo server) {
         return MoreObjects.toStringHelper(server)
                 .add("name", server.getName())
-                .add("address", server.getAddress().getAddress().getHostAddress())
-                .add("port", server.getAddress().getPort())
+                .add("address", ((InetSocketAddress) server.getSocketAddress()).getAddress().getHostAddress())
+                .add("port", ((InetSocketAddress) server.getSocketAddress()).getPort())
                 .add("motd", server.getMotd())
                 .add("restricted", server.isRestricted())
                 .add("online", server.getPlayers().size())

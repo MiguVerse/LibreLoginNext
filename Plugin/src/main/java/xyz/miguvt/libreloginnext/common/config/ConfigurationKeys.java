@@ -259,9 +259,9 @@ public class ConfigurationKeys {
             "totp",
             """
                     This section is used for 2FA configuration.
-                    !! YOU MUST HAVE PROTOCOLIZE INSTALLED FOR THIS TO WORK !!
+                    !! YOU MUST HAVE PACKETEVENTS INSTALLED FOR THIS TO WORK !!
                     
-                    You can find more information on the wiki: https://github.com/kyngs/LibreLogin/wiki/2FA
+                    You can find more information on the wiki: https://github.com/MiguVerse/LibreLogin/wiki/2FA
                     """
     );
 
@@ -402,6 +402,7 @@ public class ConfigurationKeys {
             "!!THIS OPTION IS IRRELEVANT WHEN USING PAPER!! Defines port(s) that limbo server can be bounded to.",
             ConfigurateHelper::getString
     );
+    @SuppressWarnings("unused") // Used for configuration file documentation/comments
     private static final ConfigurationKey<?> MAIL = ConfigurationKey.createCommentKey(
             "mail",
             """
