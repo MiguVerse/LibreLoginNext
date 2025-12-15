@@ -261,7 +261,7 @@ public class ConfigurationKeys {
                     This section is used for 2FA configuration.
                     !! YOU MUST HAVE PACKETEVENTS INSTALLED FOR THIS TO WORK !!
                     
-                    You can find more information on the wiki: https://github.com/MiguVerse/LibreLogin/wiki/2FA
+                    You can find more information on the wiki: https://github.com/MiguVerse/LibreLoginNext/wiki/2FA
                     """
     );
 
