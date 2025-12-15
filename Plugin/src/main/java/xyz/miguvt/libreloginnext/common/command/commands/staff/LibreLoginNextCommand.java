@@ -154,7 +154,7 @@ public class LibreLoginNextCommand<P> extends StaffCommand<P> {
     }
 
     @Subcommand("reload configuration")
-    @CommandPermission("librepremium.reload.configuration")
+    @CommandPermission("libreloginnext.reload.configuration")
     public CompletionStage<Void> onReloadConfiguration(Audience audience) {
         return runAsync(() -> {
             audience.sendMessage(getMessage("info-reloading"));
@@ -176,7 +176,7 @@ public class LibreLoginNextCommand<P> extends StaffCommand<P> {
     }
 
     @Subcommand("reload messages")
-    @CommandPermission("librepremium.reload.messages")
+    @CommandPermission("libreloginnext.reload.messages")
     public CompletionStage<Void> onReloadMessages(Audience audience) {
         return runAsync(() -> {
             audience.sendMessage(getMessage("info-reloading"));
@@ -200,7 +200,7 @@ public class LibreLoginNextCommand<P> extends StaffCommand<P> {
     }
 
     @Subcommand("user info")
-    @CommandPermission("librepremium.user.info")
+    @CommandPermission("libreloginnext.user.info")
     @Syntax("{@@syntax.user-info}")
     @CommandCompletion("%autocomplete.user-info")
     public CompletionStage<Void> onUserInfo(Audience audience, String name) {
@@ -239,7 +239,7 @@ public class LibreLoginNextCommand<P> extends StaffCommand<P> {
     }
 
     @Subcommand("user migrate")
-    @CommandPermission("librepremium.user.migrate")
+    @CommandPermission("libreloginnext.user.migrate")
     @Syntax("{@@syntax.user-migrate}")
     @CommandCompletion("%autocomplete.user-migrate")
     public CompletionStage<Void> onUserMigrate(Audience audience, String name, String newName) {
@@ -268,7 +268,7 @@ public class LibreLoginNextCommand<P> extends StaffCommand<P> {
     }
 
     @Subcommand("user unregister")
-    @CommandPermission("librepremium.user.unregister")
+    @CommandPermission("libreloginnext.user.unregister")
     @Syntax("{@@syntax.user-unregister}")
     @CommandCompletion("%autocomplete.user-unregister")
     public CompletionStage<Void> onUserUnregister(Audience audience, String name) {
@@ -291,7 +291,7 @@ public class LibreLoginNextCommand<P> extends StaffCommand<P> {
     }
 
     @Subcommand("user delete")
-    @CommandPermission("librepremium.user.delete")
+    @CommandPermission("libreloginnext.user.delete")
     @Syntax("{@@syntax.user-delete}")
     @CommandCompletion("%autocomplete.user-delete")
     public CompletionStage<Void> onUserDelete(Audience audience, String name) {
@@ -309,7 +309,7 @@ public class LibreLoginNextCommand<P> extends StaffCommand<P> {
     }
 
     @Subcommand("user premium")
-    @CommandPermission("librepremium.user.premium")
+    @CommandPermission("libreloginnext.user.premium")
     @Syntax("{@@syntax.user-premium}")
     @CommandCompletion("%autocomplete.user-premium")
     public CompletionStage<Void> onUserPremium(Audience audience, String name) {
@@ -331,7 +331,7 @@ public class LibreLoginNextCommand<P> extends StaffCommand<P> {
     }
 
     @Subcommand("user cracked")
-    @CommandPermission("librepremium.user.cracked")
+    @CommandPermission("libreloginnext.user.cracked")
     @Syntax("{@@syntax.user-cracked}")
     @CommandCompletion("%autocomplete.user-cracked")
     public CompletionStage<Void> onUserCracked(Audience audience, String name) {
@@ -352,7 +352,7 @@ public class LibreLoginNextCommand<P> extends StaffCommand<P> {
     }
 
     @Subcommand("user register")
-    @CommandPermission("librepremium.user.register")
+    @CommandPermission("libreloginnext.user.register")
     @Syntax("{@@syntax.user-register}")
     @CommandCompletion("%autocomplete.user-register")
     public CompletionStage<Void> onUserRegister(Audience audience, String name, String password) {
@@ -392,7 +392,7 @@ public class LibreLoginNextCommand<P> extends StaffCommand<P> {
     }
 
     @Subcommand("user login")
-    @CommandPermission("librepremium.user.login")
+    @CommandPermission("libreloginnext.user.login")
     @Syntax("{@@syntax.user-login}")
     @CommandCompletion("%autocomplete.user-login")
     public CompletionStage<Void> onUserLogin(Audience audience, String name) {
@@ -412,7 +412,7 @@ public class LibreLoginNextCommand<P> extends StaffCommand<P> {
     }
 
     @Subcommand("user 2faoff")
-    @CommandPermission("librepremium.user.2faoff")
+    @CommandPermission("libreloginnext.user.2faoff")
     @Syntax("{@@syntax.user-2fa-off}")
     @CommandCompletion("%autocomplete.user-2fa-off")
     public CompletionStage<Void> onUser2FAOff(Audience audience, String name) {
@@ -430,7 +430,7 @@ public class LibreLoginNextCommand<P> extends StaffCommand<P> {
     }
 
     @Subcommand("user emailoff")
-    @CommandPermission("librepremium.user.emailoff")
+    @CommandPermission("libreloginnext.user.emailoff")
     @Syntax("{@@syntax.user-email-off}")
     @CommandCompletion("%autocomplete.user-email-off")
     public CompletionStage<Void> onUserEMailOff(Audience audience, String name) {
@@ -448,7 +448,7 @@ public class LibreLoginNextCommand<P> extends StaffCommand<P> {
     }
 
     @Subcommand("user setemail")
-    @CommandPermission("librepremium.user.setemail")
+    @CommandPermission("libreloginnext.user.setemail")
     @Syntax("{@@syntax.user-set-email}")
     @CommandCompletion("%autocomplete.user-set-email")
     public CompletionStage<Void> onUserSetEMail(Audience audience, String name, String email) {
@@ -466,7 +466,7 @@ public class LibreLoginNextCommand<P> extends StaffCommand<P> {
     }
 
     @Subcommand("user pass-change")
-    @CommandPermission("librepremium.user.pass-change")
+    @CommandPermission("libreloginnext.user.pass-change")
     @Syntax("{@@syntax.user-pass-change}")
     @CommandCompletion("%autocomplete.user-pass-change")
     public CompletionStage<Void> onUserPasswordChange(Audience audience, String name, String password) {
