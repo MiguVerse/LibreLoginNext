@@ -1,6 +1,5 @@
 plugins {
     id("java-library")
-    id("maven-publish")
     id("java")
 }
 
@@ -29,16 +28,4 @@ tasks.withType<JavaCompile> {
 java {
     withSourcesJar()
     withJavadocJar()
-}
-
-publishing {
-    publications {
-        create<MavenPublication>("maven") {
-            from(components["java"])
-            
-            // JitPack uses com.github.Username as the group
-            // The group and version are set automatically by JitPack
-            // based on the GitHub repository and release tag
-        }
-    }
 }
