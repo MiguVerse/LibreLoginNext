@@ -186,7 +186,7 @@ public class BungeeCordLibreLoginNext extends AuthenticLibreLoginNext<ProxiedPla
 
     @Override
     protected void initMetrics(CustomChart... charts) {
-        var metrics = new Metrics(bootstrap, 17982);
+        var metrics = new Metrics(bootstrap, 28372);
 
         for (CustomChart chart : charts) {
             metrics.addCustomChart(chart);

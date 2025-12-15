@@ -184,7 +184,7 @@ public class VelocityLibreLoginNext extends AuthenticLibreLoginNext<Player, Regi
 
     @Override
     protected void initMetrics(CustomChart... charts) {
-        var metrics = factory.make(bootstrap, 17981);
+        var metrics = factory.make(bootstrap, 28371);
 
         for (CustomChart chart : charts) {
             metrics.addCustomChart(chart);
