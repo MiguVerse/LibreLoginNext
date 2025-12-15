@@ -238,27 +238,45 @@ public abstract class AuthenticLibreLoginNext<P, S> implements LibreLoginNextPlu
 
         var folder = getDataFolder();
         var migratedFromOldPlugin = false;
-        
-        if (!folder.exists()) {
-            // Try migration from any of the old folder names
-            var oldFolderNames = new String[]{"librelogin", "librepremium", "LibrePremium"};
-            
-            for (String oldName : oldFolderNames) {
-                var oldFolder = new File(folder.getParentFile(), oldName);
-                // Check for existence and presence of at least one expected config file
-                File configFile = new File(oldFolder, "config.conf");
-                File messagesFile = new File(oldFolder, "messages.conf");
-                
-                if (oldFolder.exists() && (configFile.exists() || messagesFile.exists())) {
-                    logger.info("Migrating configuration and messages from '" + oldName + "' folder...");
+
+        var oldFolderNames = new String[]{"librelogin", "librepremium", "LibrePremium"};
+
+        for (String oldName : oldFolderNames) {
+            var oldFolder = new File(folder.getParentFile(), oldName);
+            File configFile = new File(oldFolder, "config.conf");
+            File messagesFile = new File(oldFolder, "messages.conf");
+
+            if (oldFolder.exists() && (configFile.exists() || messagesFile.exists())) {
+                logger.info("Migrating configuration and messages from '" + oldName + "' folder...");
+
+                try {
+                    // Move old folder contents to the new folder
                     if (!oldFolder.renameTo(folder)) {
-                        throw new RuntimeException("Can't migrate configuration and messages from '" + oldName + "' folder!");
+                        throw new RuntimeException("Failed to migrate configuration and messages from '" + oldName + "' folder!");
                     }
+
+                    // Rename the old folder to a backup
+                    File backupFolder = new File(folder.getParentFile(), oldName + ".bck");
+                    if (!oldFolder.renameTo(backupFolder)) {
+                        logger.warn("Failed to rename old folder '" + oldName + "' to backup. Please rename it manually.");
+                    } else {
+                        logger.info("Old folder renamed to '" + backupFolder.getName() + "'.");
+                    }
+
                     migratedFromOldPlugin = true;
-                    logger.info("Successfully migrated from '" + oldName + "' folder to 'LibreLoginNext'");
-                    break; // Stop after first successful migration
+                    logger.info("Successfully migrated from '" + oldName + "' folder to 'LibreLoginNext'.");
+                    logger.info("We migrated your config. Make sure everything works fine. The old folder was renamed to '" + backupFolder.getName() + "'.");
+                    break;
+                } catch (Exception e) {
+                    logger.error("Migration failed for '" + oldName + "' folder: " + e.getMessage(), e);
                 }
+            } else {
+                logger.warn("Skipping migration for '" + oldName + "' folder: No valid files found.");
             }
+        }
+
+        if (!migratedFromOldPlugin) {
+            logger.info("No old plugin folders found for migration.");
         }
 
         try {
