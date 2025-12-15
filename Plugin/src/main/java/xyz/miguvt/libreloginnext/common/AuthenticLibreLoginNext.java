@@ -644,7 +644,7 @@ public abstract class AuthenticLibreLoginNext<P, S> implements LibreLoginNextPlu
         logger.info("Checking for updates...");
 
         try {
-            var connection = URI.create("https://api.github.com/repos/miguverse/LibreLoginNext/releases").toURL().openConnection();
+            var connection = URI.create("https://api.github.com/repos/MiguVerse/LibreLoginNext/releases").toURL().openConnection();
 
             connection.setRequestProperty("User-Agent", "LibreLoginNext");
 
