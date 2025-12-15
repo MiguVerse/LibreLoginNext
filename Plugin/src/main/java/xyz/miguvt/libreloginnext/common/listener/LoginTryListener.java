@@ -17,6 +17,7 @@ import xyz.miguvt.libreloginnext.api.event.events.AuthenticatedEvent;
 import xyz.miguvt.libreloginnext.api.event.events.WrongPasswordEvent;
 import xyz.miguvt.libreloginnext.api.event.events.WrongPasswordEvent.AuthenticationSource;
 
+@SuppressWarnings("null")
 public class LoginTryListener<P, S> {
 
     private final AuthenticLibreLoginNext<P, S> plugin;

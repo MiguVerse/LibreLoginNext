@@ -283,11 +283,39 @@ public class AuthenticListeners<Plugin extends AuthenticLibreLoginNext<P, S>, P,
             ip = platformHandle.getIP(player);
         }
 
-        // user can be null if fromFloodgate is true, handle appropriately
-        if (user == null || fromFloodgate || user.autoLoginEnabled() || (sessionTime != null && user.getLastAuthentication() != null && ip.equals(user.getIp()) && user.getLastAuthentication().toLocalDateTime().plus(sessionTime).isAfter(LocalDateTime.now()))) {
+        if (shouldSkipAuth(user, fromFloodgate, ip, sessionTime)) {
             return new BiHolder<>(true, plugin.getServerHandler().chooseLobbyServer(user, player, true, false));
         } else {
             return new BiHolder<>(false, plugin.getServerHandler().chooseLimboServer(user, player));
         }
+    }
+
+    /**
+     * Determines if authentication should be skipped for a player.
+     *
+     * @param user          The user, can be null if from Floodgate
+     * @param fromFloodgate Whether the player is from Floodgate
+     * @param ip            The player's IP address
+     * @param sessionTime   The session timeout duration
+     * @return true if authentication should be skipped, false otherwise
+     */
+    private boolean shouldSkipAuth(@Nullable User user, boolean fromFloodgate, String ip, Duration sessionTime) {
+        if (user == null || fromFloodgate) return true;
+        if (user.autoLoginEnabled()) return true;
+        return isSessionValid(user, ip, sessionTime);
+    }
+
+    /**
+     * Checks if the user's session is still valid.
+     *
+     * @param user        The user to check
+     * @param ip          The current IP address
+     * @param sessionTime The session timeout duration
+     * @return true if the session is valid, false otherwise
+     */
+    private boolean isSessionValid(User user, String ip, Duration sessionTime) {
+        if (sessionTime == null || user.getLastAuthentication() == null) return false;
+        if (!ip.equals(user.getIp())) return false;
+        return user.getLastAuthentication().toLocalDateTime().plus(sessionTime).isAfter(LocalDateTime.now());
     }
 }
