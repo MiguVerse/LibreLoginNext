@@ -74,9 +74,10 @@ import static xyz.miguvt.libreloginnext.common.config.ConfigurationKeys.*;
 
 import java.io.*;
 import java.net.URI;
-import java.nio.file.Files;
-import java.nio.file.StandardCopyOption;
+import java.nio.file.*;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -238,27 +239,79 @@ public abstract class AuthenticLibreLoginNext<P, S> implements LibreLoginNextPlu
 
         var folder = getDataFolder();
         var migratedFromOldPlugin = false;
-        
-        if (!folder.exists()) {
-            // Try migration from any of the old folder names
-            var oldFolderNames = new String[]{"librelogin", "librepremium", "LibrePremium"};
-            
-            for (String oldName : oldFolderNames) {
-                var oldFolder = new File(folder.getParentFile(), oldName);
-                // Check for existence and presence of at least one expected config file
-                File configFile = new File(oldFolder, "config.conf");
-                File messagesFile = new File(oldFolder, "messages.conf");
-                
-                if (oldFolder.exists() && (configFile.exists() || messagesFile.exists())) {
-                    logger.info("Migrating configuration and messages from '" + oldName + "' folder...");
-                    if (!oldFolder.renameTo(folder)) {
-                        throw new RuntimeException("Can't migrate configuration and messages from '" + oldName + "' folder!");
+
+        var oldFolderNames = new String[]{"librelogin", "librepremium", "LibrePremium"};
+
+        for (String oldName : oldFolderNames) {
+            var oldFolder = new File(folder.getParentFile(), oldName);
+            File configFile = new File(oldFolder, "config.conf");
+            File messagesFile = new File(oldFolder, "messages.conf");
+
+            if (oldFolder.exists() && (configFile.exists() || messagesFile.exists())) {
+                logger.info("Migrating configuration and messages from '" + oldName + "' folder...");
+
+                try {
+                    // Create a backup of the old folder
+                    String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss"));
+                    File backupFolder = new File(oldFolder.getParent(), oldName + "_backup_" + timestamp);
+                    Files.createDirectories(backupFolder.toPath());
+
+                    for (File file : oldFolder.listFiles()) {
+                        Files.copy(file.toPath(), backupFolder.toPath().resolve(file.getName()), StandardCopyOption.REPLACE_EXISTING);
                     }
+                    logger.info("Backup created at: " + backupFolder.getAbsolutePath());
+
+                    // Ensure the target directory is empty
+                    if (folder.exists()) {
+                        Files.walkFileTree(folder.toPath(), new SimpleFileVisitor<>() {
+                            @Override
+                            public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+                                Files.delete(file);
+                                return FileVisitResult.CONTINUE;
+                            }
+
+                            @Override
+                            public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
+                                Files.delete(dir);
+                                return FileVisitResult.CONTINUE;
+                            }
+                        });
+                    }
+
+                    // Migrate files to the new folder
+                    Files.createDirectories(folder.toPath());
+                    for (File file : oldFolder.listFiles()) {
+                        Files.move(file.toPath(), folder.toPath().resolve(file.getName()), StandardCopyOption.REPLACE_EXISTING);
+                        logger.info("Migrated file: " + file.getName());
+                    }
+
+                    // Optionally delete the old folder
+                    Files.walkFileTree(oldFolder.toPath(), new SimpleFileVisitor<>() {
+                        @Override
+                        public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+                            Files.delete(file);
+                            return FileVisitResult.CONTINUE;
+                        }
+
+                        @Override
+                        public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
+                            Files.delete(dir);
+                            return FileVisitResult.CONTINUE;
+                        }
+                    });
+
                     migratedFromOldPlugin = true;
-                    logger.info("Successfully migrated from '" + oldName + "' folder to 'LibreLoginNext'");
-                    break; // Stop after first successful migration
+                    logger.info("Successfully migrated from '" + oldName + "' folder to 'LibreLoginNext'.");
+                    logger.info("We migrated your config. Make sure everything works fine. A backup was created at '" + backupFolder.getAbsolutePath() + "'.");
+                    break;
+                } catch (IOException e) {
+                    logger.error("Migration failed for '" + oldName + "' folder: " + e.getMessage(), e);
                 }
             }
+        }
+
+        if (!migratedFromOldPlugin) {
+            logger.info("No old plugin folders found for migration.");
         }
 
         try {
