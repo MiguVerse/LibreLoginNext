@@ -74,9 +74,10 @@ import static xyz.miguvt.libreloginnext.common.config.ConfigurationKeys.*;
 
 import java.io.*;
 import java.net.URI;
-import java.nio.file.Files;
-import java.nio.file.StandardCopyOption;
+import java.nio.file.*;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -250,28 +251,62 @@ public abstract class AuthenticLibreLoginNext<P, S> implements LibreLoginNextPlu
                 logger.info("Migrating configuration and messages from '" + oldName + "' folder...");
 
                 try {
-                    // Move old folder contents to the new folder
-                    if (!oldFolder.renameTo(folder)) {
-                        throw new RuntimeException("Failed to migrate configuration and messages from '" + oldName + "' folder!");
+                    // Create a backup of the old folder
+                    String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss"));
+                    File backupFolder = new File(oldFolder.getParent(), oldName + "_backup_" + timestamp);
+                    Files.createDirectories(backupFolder.toPath());
+
+                    for (File file : oldFolder.listFiles()) {
+                        Files.copy(file.toPath(), backupFolder.toPath().resolve(file.getName()), StandardCopyOption.REPLACE_EXISTING);
+                    }
+                    logger.info("Backup created at: " + backupFolder.getAbsolutePath());
+
+                    // Ensure the target directory is empty
+                    if (folder.exists()) {
+                        Files.walkFileTree(folder.toPath(), new SimpleFileVisitor<>() {
+                            @Override
+                            public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+                                Files.delete(file);
+                                return FileVisitResult.CONTINUE;
+                            }
+
+                            @Override
+                            public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
+                                Files.delete(dir);
+                                return FileVisitResult.CONTINUE;
+                            }
+                        });
                     }
 
-                    // Rename the old folder to a backup
-                    File backupFolder = new File(folder.getParentFile(), oldName + ".bck");
-                    if (!oldFolder.renameTo(backupFolder)) {
-                        logger.warn("Failed to rename old folder '" + oldName + "' to backup. Please rename it manually.");
-                    } else {
-                        logger.info("Old folder renamed to '" + backupFolder.getName() + "'.");
+                    // Migrate files to the new folder
+                    Files.createDirectories(folder.toPath());
+                    for (File file : oldFolder.listFiles()) {
+                        Files.move(file.toPath(), folder.toPath().resolve(file.getName()), StandardCopyOption.REPLACE_EXISTING);
+                        logger.info("Migrated file: " + file.getName());
                     }
+
+                    // Optionally delete the old folder
+                    Files.walkFileTree(oldFolder.toPath(), new SimpleFileVisitor<>() {
+                        @Override
+                        public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+                            Files.delete(file);
+                            return FileVisitResult.CONTINUE;
+                        }
+
+                        @Override
+                        public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
+                            Files.delete(dir);
+                            return FileVisitResult.CONTINUE;
+                        }
+                    });
 
                     migratedFromOldPlugin = true;
                     logger.info("Successfully migrated from '" + oldName + "' folder to 'LibreLoginNext'.");
-                    logger.info("We migrated your config. Make sure everything works fine. The old folder was renamed to '" + backupFolder.getName() + "'.");
+                    logger.info("We migrated your config. Make sure everything works fine. A backup was created at '" + backupFolder.getAbsolutePath() + "'.");
                     break;
-                } catch (Exception e) {
+                } catch (IOException e) {
                     logger.error("Migration failed for '" + oldName + "' folder: " + e.getMessage(), e);
                 }
-            } else {
-                logger.warn("Skipping migration for '" + oldName + "' folder: No valid files found.");
             }
         }
 
