@@ -396,6 +396,15 @@ public class ConfigurationKeys {
                     """,
             ConfigurateHelper::getBoolean
     );
+    public static final ConfigurationKey<Boolean> ALLOW_SAME_LIMBO_LOBBY = new ConfigurationKey<>(
+            "allow-same-limbo-lobby",
+            false,
+            """
+                    !!!ONLY MODIFY THIS IF YOU KNOW WHAT YOU ARE DOING!!!
+                    Allows having the same lobby server/world as a limbo server/world. If you don't know what this means, enabling this can make your server insecure.
+                    """,
+            ConfigurateHelper::getBoolean
+    );
     public static final ConfigurationKey<String> LIMBO_PORT_RANGE = new ConfigurationKey<>(
             "limbo-port-range",
             "30000-40000",

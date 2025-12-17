@@ -513,9 +513,11 @@ public abstract class AuthenticLibreLoginNext<P, S> implements LibreLoginNextPlu
             var limbos = configuration.get(LIMBO);
             var lobby = configuration.get(LOBBY);
 
-            for (String value : lobby.values()) {
-                if (limbos.contains(value)) {
-                    throw new CorruptedConfigurationException("Lobby server/world %s is also a limbo server/world, this is not allowed".formatted(value));
+            if (configuration.get(ALLOW_SAME_LIMBO_LOBBY) == false) {
+                for (String value : lobby.values()) {
+                    if (limbos.contains(value)) {
+                        throw new CorruptedConfigurationException("Lobby server/world %s is also a limbo server/world, this is not allowed".formatted(value));
+                    }
                 }
             }
         } catch (IOException e) {
