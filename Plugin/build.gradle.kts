@@ -149,7 +149,7 @@ dependencies {
     compileOnly("com.velocitypowered:velocity-proxy:3.2.0-SNAPSHOT-277")
 
     //MySQL
-    libby("org.mariadb.jdbc:mariadb-java-client:3.5.6")
+    libby("org.mariadb.jdbc:mariadb-java-client:3.5.7")
     libby("com.zaxxer:HikariCP:7.0.2")
 
     //SQLite
@@ -194,13 +194,13 @@ dependencies {
     //Paper
     compileOnly("io.papermc.paper:paper-api:1.21.11-R0.1-SNAPSHOT")
     //compileOnly "com.comphenix.protocol:ProtocolLib:5.1.0"
-    libby("com.github.retrooper:packetevents-spigot:2.11.0")
+    libby("com.github.retrooper:packetevents-spigot:2.11.1")
 
     //PacketEvents for Velocity and BungeeCord
-    libby("com.github.retrooper:packetevents-velocity:2.11.0")
-    libby("com.github.retrooper:packetevents-bungeecord:2.11.0")
+    libby("com.github.retrooper:packetevents-velocity:2.11.1")
+    libby("com.github.retrooper:packetevents-bungeecord:2.11.1")
 
-    compileOnly("io.netty:netty-transport:4.2.8.Final")
+    compileOnly("io.netty:netty-transport:4.2.9.Final")
     compileOnly("com.mojang:datafixerupper:8.0.16") //I hate this so much
     compileOnly("org.apache.logging.log4j:log4j-core:2.25.2")
 
