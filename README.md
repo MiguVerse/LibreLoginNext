@@ -3,14 +3,6 @@ This is a next-generation version of [LibreLogin](https://github.com/kyngs/Libre
 
 > Continuing the legacy of LibreLogin.
 
----
-
-# Original README
-
-# LibreLogin
-
-(formerly LibrePremium) is an open-source, multiplatform, and highly customizable authentication plugin with outstanding features and API.
-
 # Quick information
 
 <img src="https://img.shields.io/badge/Java%20version-%2017+-blue?style=for-the-badge&logo=java&logoColor=white"
@@ -51,7 +43,7 @@ alt="Contributors listed"></img>
 
 ## References
 
-- check out [reviews](https://www.spigotmc.org/resources/librelogin-authorization-plugin-automatic-login-2fa.101040/reviews) on spigotmc.org  
+- check out [reviews](https://www.spigotmc.org/resources/librelogin-authorization-plugin-automatic-login-2fa.101040/reviews) on spigotmc.org (This link is from official LibreLogin, we doesnt published LibreLoginNext on spigotmc)
 
 # Special thanks
 
@@ -59,10 +51,12 @@ alt="Contributors listed"></img>
 - [FastLogin contributors](https://github.com/games647/FastLogin) - for their work, which was used as a base for the
   paper port
 - [Fejby](https://github.com/Fejby) - for providing Floodgate test server and helping with testing
+- [Kyngs](https://github.com/kyngs) - made this project possible
+- [LibreLogin contributors](https://github.com/kyngs/LibreLogin) - for providing all the base plugin
 
 # License
 
-LibrePremium is [FOSS](https://en.wikipedia.org/wiki/Free_and_open-source_software), licensed under the Mozilla Public License 2.0.
+LibrePremium (And LibreLogin/LibreLoginNext) is [FOSS](https://en.wikipedia.org/wiki/Free_and_open-source_software), licensed under the Mozilla Public License 2.0.
 
 [Read the license here.](https://github.com/MiguVerse/LibreLoginNext/blob/master/LICENSE)
 
