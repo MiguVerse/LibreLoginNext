@@ -132,16 +132,18 @@ public class PaperListeners extends AuthenticListeners<PaperLibreLoginNext, Play
         var player = event.getPlayer();
         var maxhealth = player.getAttribute(Attribute.MAX_HEALTH);
 
-        // Reset health and location if player was dead (simulating respawn)
+        // Reset health and cache respawn location if player was dead
         if (player.getHealth() == 0 && maxhealth != null) {
             player.setHealth(maxhealth.getValue());
 
-            // Teleport to respawn location (bed spawn or world spawn)
+            // Cache the respawn location to use on next join
             var respawnLocation = player.getRespawnLocation();
             if (respawnLocation == null) {
                 respawnLocation = player.getWorld().getSpawnLocation();
             }
-            player.teleport(respawnLocation);
+            
+            // Store in cache for next login
+            spawnLocationCache.put(player.getUniqueId(), respawnLocation);
         }
 
         GeneralUtil.runAsync(() -> onPlayerDisconnect(player));
@@ -190,6 +192,14 @@ public class PaperListeners extends AuthenticListeners<PaperLibreLoginNext, Play
     public void chooseWorld(AsyncPlayerSpawnLocationEvent event) {
         var uuid = event.getConnection().getProfile().getId();
         
+        // Check if we have a cached respawn location (from dying before quit)
+        var cachedRespawnLocation = spawnLocationCache.getIfPresent(uuid);
+        if (cachedRespawnLocation != null) {
+            event.setSpawnLocation(cachedRespawnLocation);
+            spawnLocationCache.invalidate(uuid);
+            return; // Use cached location and skip normal world selection
+        }
+        
         var ip = ipCache.getIfPresent(uuid);
         if (ip == null) {
             Bukkit.getScheduler().runTask(plugin.getBootstrap(), () -> {
@@ -200,9 +210,10 @@ public class PaperListeners extends AuthenticListeners<PaperLibreLoginNext, Play
             });
             return;
         }
+        
         var world = chooseServer(uuid, ip, readOnlyUserCache.getIfPresent(uuid));
         ipCache.invalidate(uuid);
-        spawnLocationCache.invalidate(uuid);
+        
         if (world.value() == null) {
             Bukkit.getScheduler().runTask(plugin.getBootstrap(), () -> {
                 var player = Bukkit.getPlayer(uuid);
