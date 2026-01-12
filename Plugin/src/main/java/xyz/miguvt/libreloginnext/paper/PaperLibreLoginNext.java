@@ -184,7 +184,7 @@ public class PaperLibreLoginNext extends AuthenticLibreLoginNext<Player, World> 
     public void authorize(Player player, User user, Audience audience) {
         try {
 
-            var location = listeners.getSpawnLocationCache().getIfPresent(player);
+            var location = listeners.getSpawnLocationCache().getIfPresent(player.getUniqueId());
 
             if (location == null) {
                 var world = getServerHandler().chooseLobbyServer(user, player, true, false);
@@ -196,7 +196,7 @@ public class PaperLibreLoginNext extends AuthenticLibreLoginNext<Player, World> 
 
                 location = world.getSpawnLocation();
             } else {
-                listeners.getSpawnLocationCache().invalidate(player);
+                listeners.getSpawnLocationCache().invalidate(player.getUniqueId());
             }
 
             var finalLocation = location;

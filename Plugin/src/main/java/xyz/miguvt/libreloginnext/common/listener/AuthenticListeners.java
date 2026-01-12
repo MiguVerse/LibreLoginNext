@@ -6,6 +6,7 @@
 
 package xyz.miguvt.libreloginnext.common.listener;
 
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import xyz.miguvt.libreloginnext.common.AuthenticLibreLoginNext;
@@ -25,6 +26,7 @@ import java.net.InetAddress;
 import java.sql.Timestamp;
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 public class AuthenticListeners<Plugin extends AuthenticLibreLoginNext<P, S>, P, S> {
 
@@ -268,25 +270,25 @@ public class AuthenticListeners<Plugin extends AuthenticLibreLoginNext<P, S>, P,
     }
 
     protected BiHolder<Boolean, S> chooseServer(P player, @Nullable String ip, @Nullable User user) {
-        var id = platformHandle.getUUIDForPlayer(player);
-        var fromFloodgate = plugin.fromFloodgate(id);
 
+        return chooseServer(platformHandle.getUUIDForPlayer(player), ip == null ? platformHandle.getIP(player) : ip, user);
+
+    }
+    
+    protected BiHolder<Boolean, S> chooseServer(UUID uuid, @NotNull String ip, @Nullable User user) {
+        var fromFloodgate = plugin.fromFloodgate(uuid);
         var sessionTime = Duration.ofSeconds(plugin.getConfiguration().get(ConfigurationKeys.SESSION_TIMEOUT));
 
         if (fromFloodgate) {
             user = null;
         } else if (user == null) {
-            user = plugin.getDatabaseProvider().getByUUID(id);
-        }
-
-        if (ip == null) {
-            ip = platformHandle.getIP(player);
+            user = plugin.getDatabaseProvider().getByUUID(uuid);
         }
 
         if (shouldSkipAuth(user, fromFloodgate, ip, sessionTime)) {
-            return new BiHolder<>(true, plugin.getServerHandler().chooseLobbyServer(user, player, true, false));
+            return new BiHolder<>(true, plugin.getServerHandler().chooseLobbyServer(user, null, true, false));
         } else {
-            return new BiHolder<>(false, plugin.getServerHandler().chooseLimboServer(user, player));
+            return new BiHolder<>(false, plugin.getServerHandler().chooseLimboServer(user, null));
         }
     }
 

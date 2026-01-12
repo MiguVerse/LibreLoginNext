@@ -6,19 +6,36 @@
 
 package xyz.miguvt.libreloginnext.paper;
 
-import com.github.benmanes.caffeine.cache.Cache;
-import com.github.benmanes.caffeine.cache.Caffeine;
-import com.github.retrooper.packetevents.PacketEvents;
-import com.github.retrooper.packetevents.event.PacketReceiveEvent;
-import com.github.retrooper.packetevents.manager.server.ServerVersion;
-import com.github.retrooper.packetevents.protocol.packettype.PacketType;
-import com.github.retrooper.packetevents.util.reflection.Reflection;
-import com.github.retrooper.packetevents.wrapper.login.client.WrapperLoginClientEncryptionResponse;
-import com.github.retrooper.packetevents.wrapper.login.client.WrapperLoginClientLoginStart;
-import com.github.retrooper.packetevents.wrapper.login.server.WrapperLoginServerDisconnect;
-import com.github.retrooper.packetevents.wrapper.login.server.WrapperLoginServerEncryptionRequest;
-import io.github.retrooper.packetevents.util.SpigotReflectionUtil;
-import net.kyori.adventure.text.Component;
+import static xyz.miguvt.libreloginnext.paper.protocol.ProtocolUtil.getServerVersion;
+
+import java.io.IOException;
+import java.lang.reflect.Method;
+import java.net.HttpURLConnection;
+import java.net.Inet6Address;
+import java.net.InetAddress;
+import java.net.SocketTimeoutException;
+import java.net.URI;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import java.security.GeneralSecurityException;
+import java.security.InvalidKeyException;
+import java.security.Key;
+import java.security.KeyPair;
+import java.security.NoSuchAlgorithmException;
+import java.security.PublicKey;
+import java.security.SecureRandom;
+import java.security.SignatureException;
+import java.util.Optional;
+import java.util.Random;
+import java.util.UUID;
+import java.util.concurrent.TimeUnit;
+
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+import javax.crypto.SecretKey;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -31,8 +48,23 @@ import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
-import org.spigotmc.event.player.PlayerSpawnLocationEvent;
 
+import com.github.benmanes.caffeine.cache.Cache;
+import com.github.benmanes.caffeine.cache.Caffeine;
+import com.github.retrooper.packetevents.PacketEvents;
+import com.github.retrooper.packetevents.event.PacketReceiveEvent;
+import com.github.retrooper.packetevents.manager.server.ServerVersion;
+import com.github.retrooper.packetevents.protocol.packettype.PacketType;
+import com.github.retrooper.packetevents.util.reflection.Reflection;
+import com.github.retrooper.packetevents.wrapper.login.client.WrapperLoginClientEncryptionResponse;
+import com.github.retrooper.packetevents.wrapper.login.client.WrapperLoginClientLoginStart;
+import com.github.retrooper.packetevents.wrapper.login.server.WrapperLoginServerDisconnect;
+import com.github.retrooper.packetevents.wrapper.login.server.WrapperLoginServerEncryptionRequest;
+
+import io.github.retrooper.packetevents.util.SpigotReflectionUtil;
+import io.papermc.paper.event.player.AsyncPlayerSpawnLocationEvent;
+import net.kyori.adventure.text.Component;
+import xyz.miguvt.libreloginnext.api.database.User;
 import xyz.miguvt.libreloginnext.common.AuthenticLibreLoginNext;
 import xyz.miguvt.libreloginnext.common.config.ConfigurationKeys;
 import xyz.miguvt.libreloginnext.common.config.MessageKeys;
@@ -41,21 +73,6 @@ import xyz.miguvt.libreloginnext.common.util.GeneralUtil;
 import xyz.miguvt.libreloginnext.paper.protocol.ClientPublicKey;
 import xyz.miguvt.libreloginnext.paper.protocol.EncryptionUtil;
 import xyz.miguvt.libreloginnext.paper.protocol.ProtocolUtil;
-import xyz.miguvt.libreloginnext.api.database.User;
-
-import static xyz.miguvt.libreloginnext.paper.protocol.ProtocolUtil.getServerVersion;
-
-import java.io.IOException;
-import java.lang.reflect.Method;
-import java.net.*;
-import java.net.URI;
-import java.nio.charset.StandardCharsets;
-import java.security.*;
-import java.util.Optional;
-import java.util.Random;
-import java.util.UUID;
-import java.util.concurrent.TimeUnit;
-import javax.crypto.*;
 
 public class PaperListeners extends AuthenticListeners<PaperLibreLoginNext, Player, World> implements Listener {
 
@@ -78,9 +95,9 @@ public class PaperListeners extends AuthenticListeners<PaperLibreLoginNext, Play
             .expireAfterWrite(2, TimeUnit.MINUTES)
             .build();
     private final FloodgateHelper floodgateHelper;
-    private final Cache<Player, String> ipCache;
+    private final Cache<UUID, String> ipCache;
     private final Cache<UUID, User> readOnlyUserCache;
-    private final Cache<Player, Location> spawnLocationCache;
+    private final Cache<UUID, Location> spawnLocationCache;
 
     public PaperListeners(PaperLibreLoginNext plugin) {
         super(plugin);
@@ -100,13 +117,18 @@ public class PaperListeners extends AuthenticListeners<PaperLibreLoginNext, Play
                 .build();
     }
 
-    public Cache<Player, Location> getSpawnLocationCache() {
+    public Cache<UUID, Location> getSpawnLocationCache() {
         return spawnLocationCache;
     }
 
     @EventHandler
     public void onQuit(PlayerQuitEvent event) {
-        GeneralUtil.runAsync(() -> onPlayerDisconnect(event.getPlayer()));
+        var player = event.getPlayer();
+        var maxhealth = player.getAttribute(Attribute.MAX_HEALTH);
+        if (player.getHealth() == 0 && maxhealth != null) {
+            player.setHealth(maxhealth.getValue());
+        }
+        GeneralUtil.runAsync(() -> onPlayerDisconnect(player));
     }
 
     /**
@@ -117,7 +139,7 @@ public class PaperListeners extends AuthenticListeners<PaperLibreLoginNext, Play
     @SuppressWarnings("deprecation")
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onPostLogin(PlayerLoginEvent event) {
-        ipCache.put(event.getPlayer(), event.getAddress().getHostAddress());
+        ipCache.put(event.getPlayer().getUniqueId(), event.getAddress().getHostAddress());
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
@@ -146,36 +168,26 @@ public class PaperListeners extends AuthenticListeners<PaperLibreLoginNext, Play
 
     /**
      * Chooses the initial world/spawn location for players.
-     * Note: PlayerSpawnLocationEvent is deprecated and marked for removal in 1.21.9.
-     * This will need to be migrated to the new spawn location API when available.
      */
-    @SuppressWarnings("removal")
     @EventHandler(priority = EventPriority.HIGHEST)
-    public void chooseWorld(PlayerSpawnLocationEvent event) {
-        var ip = ipCache.getIfPresent(event.getPlayer());
+    public void chooseWorld(AsyncPlayerSpawnLocationEvent event) {
+        var uuid = event.getConnection().getProfile().getId();
+
+        var ip = ipCache.getIfPresent(uuid);
         if (ip == null) {
-            event.getPlayer().kick(Component.text("Internal error, please try again later."));
+            Bukkit.getScheduler().runTask(plugin.getBootstrap(), () -> Bukkit.getPlayer(uuid).kick(Component.text("Internal error, please try again later.")));
             return;
         }
-        var world = chooseServer(event.getPlayer(), ip, readOnlyUserCache.getIfPresent(event.getPlayer().getUniqueId()));
-        ipCache.invalidate(event.getPlayer());
-        spawnLocationCache.invalidate(event.getPlayer());
+        var world = chooseServer(uuid, ip, readOnlyUserCache.getIfPresent(uuid));
+        ipCache.invalidate(uuid);
+        spawnLocationCache.invalidate(uuid);
         if (world.value() == null) {
-            event.getPlayer().kick(plugin.getMessages().getMessage("kick-no-" + (world.key() ? "lobby" : "limbo")));
+            Bukkit.getScheduler().runTask(plugin.getBootstrap(), () -> Bukkit.getPlayer(uuid).kick(Component.text("kick-no-" + (world.key() ? "lobby" : "limbo"))));
         } else {
-            if (event.getPlayer().getHealth() == 0) {
-                //Fixes bug where player is dead when logging in
-                var maxHealthAttr = event.getPlayer().getAttribute(Attribute.MAX_HEALTH);
-                if (maxHealthAttr != null) {
-                    event.getPlayer().setHealth(maxHealthAttr.getValue());
-                }
-                var respawnLoc = event.getPlayer().getRespawnLocation();
-                event.setSpawnLocation(respawnLoc == null ? world.value().getSpawnLocation() : respawnLoc);
-            }
             //This is terrible, but should work
-            if (event.getPlayer().hasPlayedBefore() && !plugin.getConfiguration().get(ConfigurationKeys.LIMBO).contains(event.getSpawnLocation().getWorld().getName())) {
+            if (!event.isNewPlayer() && !plugin.getConfiguration().get(ConfigurationKeys.LIMBO).contains(event.getSpawnLocation().getWorld().getName())) {
                 if (plugin.getConfiguration().get(ConfigurationKeys.LIMBO).contains(world.value().getName())) {
-                    spawnLocationCache.put(event.getPlayer(), event.getSpawnLocation());
+                    spawnLocationCache.put(uuid, event.getSpawnLocation());
                 } else {
                     return;
                 }
