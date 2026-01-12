@@ -178,19 +178,28 @@ public class PaperListeners extends AuthenticListeners<PaperLibreLoginNext, Play
     @EventHandler(priority = EventPriority.HIGHEST)
     public void chooseWorld(AsyncPlayerSpawnLocationEvent event) {
         var uuid = event.getConnection().getProfile().getId();
-
+        
         var ip = ipCache.getIfPresent(uuid);
         if (ip == null) {
-            Bukkit.getScheduler().runTask(plugin.getBootstrap(), () -> Bukkit.getPlayer(uuid).kick(Component.text("Internal error, please try again later.")));
+            Bukkit.getScheduler().runTask(plugin.getBootstrap(), () -> {
+                var player = Bukkit.getPlayer(uuid);
+                if (player != null) {
+                    player.kick(Component.text("Internal error, please try again later."));
+                }
+            });
             return;
         }
         var world = chooseServer(uuid, ip, readOnlyUserCache.getIfPresent(uuid));
         ipCache.invalidate(uuid);
         spawnLocationCache.invalidate(uuid);
         if (world.value() == null) {
-            Bukkit.getScheduler().runTask(plugin.getBootstrap(), () -> Bukkit.getPlayer(uuid).kick(Component.text("kick-no-" + (world.key() ? "lobby" : "limbo"))));
+            Bukkit.getScheduler().runTask(plugin.getBootstrap(), () -> {
+                var player = Bukkit.getPlayer(uuid);
+                if (player != null) {
+                    player.kick(Component.text("kick-no-" + (world.key() ? "lobby" : "limbo")));
+                }
+            });
         } else {
-            //This is terrible, but should work
             if (!event.isNewPlayer() && !plugin.getConfiguration().get(ConfigurationKeys.LIMBO).contains(event.getSpawnLocation().getWorld().getName())) {
                 if (plugin.getConfiguration().get(ConfigurationKeys.LIMBO).contains(world.value().getName())) {
                     spawnLocationCache.put(uuid, event.getSpawnLocation());
@@ -198,9 +207,7 @@ public class PaperListeners extends AuthenticListeners<PaperLibreLoginNext, Play
                     return;
                 }
             }
-
             event.setSpawnLocation(world.value().getSpawnLocation());
-
         }
     }
 

@@ -122,9 +122,14 @@ public class AuthenticServerHandler<P, S> implements ServerHandler<P, S> {
 
         if (event.getServer() != null) return event.getServer();
 
-        var virtual = plugin.getPlatformHandle().getPlayersVirtualHost(player);
+        // Handle null player, during AsyncPlayerSpawnLocationEvent, player doesn't exist yet
+        var virtual = player != null ? plugin.getPlatformHandle().getPlayersVirtualHost(player) : null;
 
-        plugin.getLogger().debug("Virtual host for player " + plugin.getPlatformHandle().getUsernameForPlayer(player) + ": " + virtual);
+        // Get username safely, prefer player if available, fallback to user
+        String username = player != null ? plugin.getPlatformHandle().getUsernameForPlayer(player) : 
+                        user != null ? user.getLastNickname() : "unknown";
+        
+        plugin.getLogger().debug("Virtual host for player " + username + ": " + virtual);
 
         var servers = virtual == null ? lobbyServers.get("root") : lobbyServers.get(virtual);
 
