@@ -81,11 +81,17 @@ public class PaperListeners extends AuthenticListeners<PaperLibreLoginNext, Play
     private static Method encryptMethod;
     private static Method cipherMethod;
 
+    private static final boolean DEOBFUSCATION_ENABLED = getServerVersion().isOlderThan(ServerVersion.V_1_21_11);
+
     static {
-        try {
-            ENCRYPTION_CLASS = Class.forName("net.minecraft.util." + ENCRYPTION_CLASS_NAME);
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
+        if (DEOBFUSCATION_ENABLED) {
+            try {
+                ENCRYPTION_CLASS = Class.forName("net.minecraft.util." + ENCRYPTION_CLASS_NAME);
+            } catch (ClassNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+        } else {
+            ENCRYPTION_CLASS = null;
         }
     }
 
