@@ -131,11 +131,22 @@ public class PaperListeners extends AuthenticListeners<PaperLibreLoginNext, Play
     public void onQuit(PlayerQuitEvent event) {
         var player = event.getPlayer();
         var maxhealth = player.getAttribute(Attribute.MAX_HEALTH);
+
+        // Reset health and location if player was dead (simulating respawn)
         if (player.getHealth() == 0 && maxhealth != null) {
             player.setHealth(maxhealth.getValue());
+
+            // Teleport to respawn location (bed spawn or world spawn)
+            var respawnLocation = player.getRespawnLocation();
+            if (respawnLocation == null) {
+                respawnLocation = player.getWorld().getSpawnLocation();
+            }
+            player.teleport(respawnLocation);
         }
+
         GeneralUtil.runAsync(() -> onPlayerDisconnect(player));
     }
+
 
     /**
      * Captures the player's IP address on login for later use.
