@@ -6,24 +6,24 @@ This is a next-generation version of [LibreLogin](https://github.com/kyngs/Libre
 # Download Links
 
 <a href="https://modrinth.com/plugin/libreloginnext">
-  <img alt="modrinth" height="56" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/available/modrinth_vector.svg">
+  <img alt="modrinth" height="56" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/available/modrinth_vector.svg"></img>
 </a>
 
 <a href="https://www.spigotmc.org/resources/libreloginnext.131713/">
-  <img alt="spigot" height="56" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/supported/spigot_vector.svg">
+  <img alt="spigot" height="56" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/supported/spigot_vector.svg"></img>
 </a>
 
 <a href="https://github.com/MiguVerse/LibreLoginNext/releases/latest/download/LibreLoginNext.jar">
-  <img alt="github" height="56" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/available/github_vector.svg">
+  <img alt="github" height="56" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/available/github_vector.svg"></img>
 </a>
 
 <a href="https://builtbybit.com/resources/libreloginnext.89393/">
-  <img alt="builtbybit" height="56" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/available/builtbybit_vector.svg">
+  <img alt="builtbybit" height="56" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/available/builtbybit_vector.svg"></img>
 </a>
 
 # Quick information
 
-<img alt="Plugin requires Java 17 or newer" height="56" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/built-with/java17_vector.svg">
+<img alt="Plugin requires Java 17 or newer" height="56" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/built-with/java17_vector.svg"></img>
 
 <a href="https://github.com/MiguVerse/LibreLoginNext/wiki">
 <img src="https://img.shields.io/badge/Documentation-555555?style=for-the-badge&logo=wikipedia" alt="Documentation on the Wiki"></img>
@@ -50,9 +50,9 @@ alt="Contributors listed"></img>
 
 ## Platforms
 
-<img alt="velocity" height="56" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/supported/velocity_vector.svg">
-<img alt="bungeecord" height="56" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/supported/bungeecord_vector.svg">
-<img alt="paper" height="56" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/supported/paper_vector.svg">
+<img alt="velocity" height="56" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/supported/velocity_vector.svg"></img>
+<img alt="bungeecord" height="56" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/supported/bungeecord_vector.svg"></img>
+<img alt="paper" height="56" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/supported/paper_vector.svg"></img>
 
 > All forks of these ones should work like WaterFall, LeafMC, Purpur, etc
 
