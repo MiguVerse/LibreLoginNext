@@ -13,7 +13,7 @@ This is a next-generation version of [LibreLogin](https://github.com/kyngs/Libre
   <img alt="spigot" height="56" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/supported/spigot_vector.svg">
 </a>
 
-<a href="https://github.com/MiguVerse/LibreLoginNext/releases/download/0.25.2/LibreLoginNext.jar">
+<a href="https://github.com/MiguVerse/LibreLoginNext/releases/latest/download/LibreLoginNext.jar">
   <img alt="github" height="56" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/available/github_vector.svg">
 </a>
 
