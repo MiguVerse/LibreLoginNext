@@ -54,7 +54,7 @@ alt="Contributors listed"></img>
 <img alt="bungeecord" height="56" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/supported/bungeecord_vector.svg">
 <img alt="paper" height="56" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/supported/paper_vector.svg">
 
-> All forks of this ones should work like WaterFall, LeafMC, Purpur, etc
+> All forks of these ones should work like WaterFall, LeafMC, Purpur, etc
 
 ## References
 
