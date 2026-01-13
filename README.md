@@ -3,15 +3,28 @@ This is a next-generation version of [LibreLogin](https://github.com/kyngs/Libre
 
 > Continuing the legacy of LibreLogin.
 
+# Download Links
+
+<a href="https://modrinth.com/plugin/libreloginnext">
+  <img alt="modrinth" height="56" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/available/modrinth_vector.svg">
+</a>
+
+<a href="https://www.spigotmc.org/resources/libreloginnext.131713/">
+  <img alt="spigot" height="56" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/supported/spigot_vector.svg">
+</a>
+
+<a href="https://github.com/MiguVerse/LibreLoginNext/releases/download/0.25.2/LibreLoginNext.jar">
+  <img alt="github" height="56" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/available/github_vector.svg">
+</a>
+
+<a href="https://builtbybit.com/resources/libreloginnext.89393/">
+  <img alt="builtbybit" height="56" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/available/builtbybit_vector.svg"></img>
+</a>
+
 # Quick information
 
-<img src="https://img.shields.io/badge/Java%20version-%2017+-blue?style=for-the-badge&logo=java&logoColor=white"
-alt="Plugin requires Java 17 or newer"></img>
+<img alt="Plugin requires Java 17 or newer" height="56" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/built-with/java17_vector.svg">
 
-<a href="https://discord.gg/HP3CSfCv2v">
-<img src="https://img.shields.io/badge/Discord-%20SUPPORT-blue?style=for-the-badge&logo=discord&logoColor=white" 
-alt="Support available on Discord"></img>
-</a>
 <a href="https://github.com/MiguVerse/LibreLoginNext/wiki">
 <img src="https://img.shields.io/badge/Documentation-555555?style=for-the-badge&logo=wikipedia" alt="Documentation on the Wiki"></img>
 </a>
@@ -37,13 +50,15 @@ alt="Contributors listed"></img>
 
 ## Platforms
 
-- [x] Velocity
-- [x] BungeeCord
-- [x] Paper
+<img alt="velocity" height="56" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/supported/velocity_vector.svg">
+<img alt="bungeecord" height="56" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/supported/bungeecord_vector.svg">
+<img alt="paper" height="56" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/supported/paper_vector.svg">
+
+> All forks of this ones should work like WaterFall, LeafMC, Purpur, etc
 
 ## References
 
-- check out [reviews](https://www.spigotmc.org/resources/libreloginnext.131713//reviews) on spigotmc.org
+- check out [reviews](https://www.spigotmc.org/resources/libreloginnext.131713/reviews) on spigotmc.org
 
 # Special thanks
 
