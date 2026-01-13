@@ -43,7 +43,7 @@ alt="Contributors listed"></img>
 
 ## References
 
-- check out [reviews](https://www.spigotmc.org/resources/librelogin-authorization-plugin-automatic-login-2fa.101040/reviews) on spigotmc.org (This link is from official LibreLogin, we doesnt published LibreLoginNext on spigotmc)
+- check out [reviews](https://www.spigotmc.org/resources/libreloginnext.131713//reviews) on spigotmc.org
 
 # Special thanks
 
