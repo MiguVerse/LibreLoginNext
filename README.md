@@ -18,7 +18,7 @@ This is a next-generation version of [LibreLogin](https://github.com/kyngs/Libre
 </a>
 
 <a href="https://builtbybit.com/resources/libreloginnext.89393/">
-  <img alt="builtbybit" height="56" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/available/builtbybit_vector.svg"></img>
+  <img alt="builtbybit" height="56" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/available/builtbybit_vector.svg">
 </a>
 
 # Quick information
