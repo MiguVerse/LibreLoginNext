@@ -26,12 +26,12 @@ This is a next-generation version of [LibreLogin](https://github.com/kyngs/Libre
 <img alt="Plugin requires Java 17 or newer" height="56" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/built-with/java17_vector.svg">
 
 <a href="https://github.com/MiguVerse/LibreLoginNext/wiki">
-<img src="https://img.shields.io/badge/Documentation-555555?style=for-the-badge&logo=wikipedia" alt="Documentation on the Wiki"></img>
+<img src="https://img.shields.io/badge/Documentation-555555?style=for-the-badge&logo=wikipedia" alt="Documentation on the Wiki">
 </a>
 
 <a href="https://github.com/MiguVerse/LibreLoginNext/graphs/contributors">
 <img src="https://img.shields.io/badge/Contributors-Credits-blue?style=for-the-badge" 
-alt="Contributors listed"></img>
+alt="Contributors listed">
 </a>
 
 ## Basic set of features
