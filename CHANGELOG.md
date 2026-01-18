@@ -1,3 +1,2 @@
-0.25.2 - "The PaperMC Update"
-* Fixed [#6](https://github.com/MiguVerse/LibreLoginNext/issues/6)
-* Migrated to AsyncPlayerSpawnLocationEvent
+0.25.3 - "The CheckSum Update"
+* Fixed issue with checksum checks
