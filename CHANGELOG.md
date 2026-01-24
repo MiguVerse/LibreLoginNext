@@ -1,2 +1,2 @@
-0.25.3 - "The CheckSum Update"
-* Fixed issue with checksum checks
+0.25.4 - "Rebirth"
+* Rebranded everything from LibreLoginNext to MiguVerseNext

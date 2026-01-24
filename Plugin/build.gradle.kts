@@ -2,10 +2,10 @@ import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 
 plugins {
     id("java")
-    id("com.gradleup.shadow") version "9.3.0"
+    id("com.gradleup.shadow") version "9.3.1"
     id("net.kyori.blossom").version("2.2.0")
     id("java-library")
-    id("xyz.miguvt.libby.plugin").version("1.2.3")
+    id("xyz.miguvt.libby.plugin").version("1.2.8")
     //id("xyz.kyngs.mcupload.plugin").version("0.3.4")
 }
 
@@ -39,7 +39,7 @@ tasks.withType<JavaCompile> {
 //        }
 //        github {
 //            token = System.getenv("GITHUB_TOKEN")
-//            repository = "MiguVerse/LibreLoginNext"
+//            repository = "MiguVerse/MiguLoginNext"
 //        }
 //        discord {
 //            webhookUrl = System.getenv("DISCORD_WEBHOOK_URL")
@@ -81,7 +81,7 @@ sourceSets.main {
 }
 
 tasks.withType<ShadowJar> {
-    archiveFileName.set("LibreLoginNext.jar")
+    archiveFileName.set("MiguLoginNext.jar")
 
     dependencies {
         exclude(dependency("org.slf4j:.*:.*"))
@@ -90,20 +90,20 @@ tasks.withType<ShadowJar> {
         exclude(dependency("com.google.protobuf:.*:.*"))
     }
 
-    relocate("co.aikar.acf", "xyz.miguvt.libreloginnext.lib.acf")
-    relocate("com.github.benmanes.caffeine", "xyz.miguvt.libreloginnext.lib.caffeine")
-    relocate("com.typesafe.config", "xyz.miguvt.libreloginnext.lib.hocon")
-    relocate("com.zaxxer.hikari", "xyz.miguvt.libreloginnext.lib.hikari")
-    relocate("org.mariadb", "xyz.miguvt.libreloginnext.lib.mariadb")
-    relocate("org.bstats", "xyz.miguvt.libreloginnext.lib.metrics")
-    relocate("org.intellij", "xyz.miguvt.libreloginnext.lib.intellij")
-    relocate("org.jetbrains", "xyz.miguvt.libreloginnext.lib.jetbrains")
-    relocate("io.leangen.geantyref", "xyz.miguvt.libreloginnext.lib.reflect")
-    relocate("org.spongepowered.configurate", "xyz.miguvt.libreloginnext.lib.configurate")
-    relocate("net.byteflux.libby", "xyz.miguvt.libreloginnext.lib.libby")
-    relocate("org.postgresql", "xyz.miguvt.libreloginnext.lib.postgresql")
-    relocate("com.github.retrooper.packetevents", "xyz.miguvt.libreloginnext.lib.packetevents.api")
-    relocate("io.github.retrooper.packetevents", "xyz.miguvt.libreloginnext.lib.packetevents.platform")
+    relocate("co.aikar.acf", "xyz.miguvt.miguloginnext.lib.acf")
+    relocate("com.github.benmanes.caffeine", "xyz.miguvt.miguloginnext.lib.caffeine")
+    relocate("com.typesafe.config", "xyz.miguvt.miguloginnext.lib.hocon")
+    relocate("com.zaxxer.hikari", "xyz.miguvt.miguloginnext.lib.hikari")
+    relocate("org.mariadb", "xyz.miguvt.miguloginnext.lib.mariadb")
+    relocate("org.bstats", "xyz.miguvt.miguloginnext.lib.metrics")
+    relocate("org.intellij", "xyz.miguvt.miguloginnext.lib.intellij")
+    relocate("org.jetbrains", "xyz.miguvt.miguloginnext.lib.jetbrains")
+    relocate("io.leangen.geantyref", "xyz.miguvt.miguloginnext.lib.reflect")
+    relocate("org.spongepowered.configurate", "xyz.miguvt.miguloginnext.lib.configurate")
+    relocate("net.byteflux.libby", "xyz.miguvt.miguloginnext.lib.libby")
+    relocate("org.postgresql", "xyz.miguvt.miguloginnext.lib.postgresql")
+    relocate("com.github.retrooper.packetevents", "xyz.miguvt.miguloginnext.lib.packetevents.api")
+    relocate("io.github.retrooper.packetevents", "xyz.miguvt.miguloginnext.lib.packetevents.platform")
 }
 
 java {
@@ -124,6 +124,11 @@ libby {
 
     // Often redeploys the same version, so calculating checksum causes false flags
     noChecksumDependency("com.github.retrooper.packetevents:.*:.*")
+
+    // Paper loader generation configuration
+    generatePaperLoader = true         // set false to skip; null = auto-detect Paper
+    loaderClassName = "GeneratedLibbyLoader"
+    updatePaperPluginYml = true        // set false to avoid touching paper-plugin.yml
 }
 
 configurations.all {
@@ -146,7 +151,7 @@ dependencies {
     //Velocity
     annotationProcessor("com.velocitypowered:velocity-api:3.4.0-SNAPSHOT")
     compileOnly("com.velocitypowered:velocity-api:3.4.0-SNAPSHOT")
-    compileOnly("com.velocitypowered:velocity-proxy:3.2.0-SNAPSHOT-277")
+    compileOnly("com.velocitypowered:velocity-proxy:3.4.0-SNAPSHOT")
 
     //MySQL
     libby("org.mariadb.jdbc:mariadb-java-client:3.5.7")
@@ -156,7 +161,7 @@ dependencies {
     libby("org.xerial:sqlite-jdbc:3.51.1.0")
 
     //PostgreSQL
-    libby("org.postgresql:postgresql:42.7.8")
+    libby("org.postgresql:postgresql:42.7.9")
 
     //ACF
     libby("co.aikar:acf-velocity:0.5.1-SNAPSHOT")
@@ -201,8 +206,7 @@ dependencies {
     libby("com.github.retrooper:packetevents-bungeecord:2.11.1")
 
     compileOnly("io.netty:netty-transport:4.2.9.Final")
-    compileOnly("com.mojang:datafixerupper:8.0.16") //I hate this so much
-    compileOnly("org.apache.logging.log4j:log4j-core:2.25.2")
+    compileOnly("org.apache.logging.log4j:log4j-core:2.25.3")
 
     //Libby
     implementation("com.github.MiguVerse.libby:libby-bukkit:2a5d50f04b")
@@ -211,7 +215,7 @@ dependencies {
     implementation("com.github.MiguVerse.libby:libby-paper:2a5d50f04b")
 
     //NanoLimboPlugin
-    compileOnly("com.github.bivashy.NanoLimboPlugin:api:1.0.8") // TODO Need research on why it's not working if we change to something upper than 1.0.8, no breaking changes documented...
+    compileOnly("com.github.bivashy.NanoLimboPlugin:api:1.0.15")
 }
 
 tasks.withType<ProcessResources> {

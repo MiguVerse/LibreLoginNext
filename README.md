@@ -1,23 +1,23 @@
-# LibreLogin-Next
+# MiguLogin-Next
 This is a next-generation version of [LibreLogin](https://github.com/kyngs/LibreLogin), continuing its development with new features, improvements, and bug fixes.
 
 > Continuing the legacy of LibreLogin.
 
 # Download Links
 
-<a href="https://modrinth.com/plugin/libreloginnext">
+<a href="https://modrinth.com/plugin/miguloginnext">
   <img alt="modrinth" height="56" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/available/modrinth_vector.svg">
 </a>
 
-<a href="https://www.spigotmc.org/resources/libreloginnext.131713/">
+<a href="https://www.spigotmc.org/resources/miguloginnext.131713/">
   <img alt="spigot" height="56" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/supported/spigot_vector.svg">
 </a>
 
-<a href="https://github.com/MiguVerse/LibreLoginNext/releases/latest/download/LibreLoginNext.jar">
+<a href="https://github.com/MiguVerse/MiguLoginNext/releases/latest/download/MiguLoginNext.jar">
   <img alt="github" height="56" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/available/github_vector.svg">
 </a>
 
-<a href="https://builtbybit.com/resources/libreloginnext.89393/">
+<a href="https://builtbybit.com/resources/miguloginnext.89393/">
   <img alt="builtbybit" height="56" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/available/builtbybit_vector.svg">
 </a>
 
@@ -25,11 +25,11 @@ This is a next-generation version of [LibreLogin](https://github.com/kyngs/Libre
 
 <img alt="Plugin requires Java 17 or newer" height="56" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/built-with/java17_vector.svg">
 
-<a href="https://github.com/MiguVerse/LibreLoginNext/wiki">
+<a href="https://github.com/MiguVerse/MiguLoginNext/wiki">
 <img src="https://img.shields.io/badge/Documentation-555555?style=for-the-badge&logo=wikipedia" alt="Documentation on the Wiki">
 </a>
 
-<a href="https://github.com/MiguVerse/LibreLoginNext/graphs/contributors">
+<a href="https://github.com/MiguVerse/MiguLoginNext/graphs/contributors">
 <img src="https://img.shields.io/badge/Contributors-Credits-blue?style=for-the-badge" 
 alt="Contributors listed">
 </a>
@@ -37,12 +37,12 @@ alt="Contributors listed">
 ## Basic set of features
 
 - AutoLogin for premium players
-- TOTP 2FA (Authy, Google Authenticator...) [details](https://github.com/MiguVerse/LibreLoginNext/wiki/2FA)
+- TOTP 2FA (Authy, Google Authenticator...) [details](https://github.com/MiguVerse/MiguLoginNext/wiki/2FA)
 - Session system
 - Name validation (including case sensitivity check)
 - Automatic data migration for premium players
 - Migration of a player's data by using one command
-- Geyser (Bedrock) support using [Floodgate](https://github.com/MiguVerse/LibreLoginNext/wiki/Floodgate)
+- Geyser (Bedrock) support using [Floodgate](https://github.com/MiguVerse/MiguLoginNext/wiki/Floodgate)
 
 ## Considerations
 
@@ -58,7 +58,7 @@ alt="Contributors listed">
 
 ## References
 
-- check out [reviews](https://www.spigotmc.org/resources/libreloginnext.131713/reviews) on spigotmc.org
+- check out [reviews](https://www.spigotmc.org/resources/miguloginnext.131713/reviews) on spigotmc.org
 
 # Special thanks
 
@@ -71,8 +71,8 @@ alt="Contributors listed">
 
 # License
 
-LibrePremium (And LibreLogin/LibreLoginNext) is [FOSS](https://en.wikipedia.org/wiki/Free_and_open-source_software), licensed under the Mozilla Public License 2.0.
+LibrePremium (And LibreLogin/MiguLoginNext) is [FOSS](https://en.wikipedia.org/wiki/Free_and_open-source_software), licensed under the Mozilla Public License 2.0.
 
-[Read the license here.](https://github.com/MiguVerse/LibreLoginNext/blob/master/LICENSE)
+[Read the license here.](https://github.com/MiguVerse/MiguLoginNext/blob/master/LICENSE)
 
 The plugin **is and always will be** completely open-source, so you don't need to worry about malicous copies.

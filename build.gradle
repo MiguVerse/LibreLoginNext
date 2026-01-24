@@ -4,11 +4,11 @@ plugins {
 
 defaultTasks 'updateLicenses', 'shadowJar'
 
-version '0.25.2'
+version '0.25.4'
 
 subprojects {
     version = rootProject.version
-    group = 'com.github.MiguVerse.LibreLoginNext'
+    group = 'com.github.MiguVerse.MiguLoginNext'
 
     apply plugin: 'org.cadixdev.licenser'
     apply plugin: 'maven-publish'
@@ -30,6 +30,9 @@ subprojects {
         matching("**/protocollib/EncryptionUtil.java") {
             header = rootProject.file("licenses/FASTLOGIN_LICENSE")
         }
+
+        // Exclude auto-generated loader files from license check
+        exclude '**/GeneratedLibbyLoader.java'
     }
 
     // JitPack publishing configuration for multi-module projects
