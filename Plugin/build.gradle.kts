@@ -124,6 +124,9 @@ libby {
 
     // Often redeploys the same version, so calculating checksum causes false flags
     noChecksumDependency("com.github.retrooper.packetevents:.*:.*")
+    noChecksumDependency("co.aikar:acf-paper:.*")
+    noChecksumDependency("co.aikar:acf-velocity:.*")
+    noChecksumDependency("co.aikar:acf-bungee:.*")
 }
 
 configurations.all {
