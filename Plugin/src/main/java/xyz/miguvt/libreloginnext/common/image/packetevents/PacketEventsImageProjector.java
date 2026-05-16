@@ -40,10 +40,10 @@ public class PacketEventsImageProjector<P, S> extends AuthenticImageProjector<P,
 
     // Minimum Minecraft version supported (1.13)
     private static final ClientVersion MIN_VERSION = ClientVersion.V_1_13;
-    // Maximum Minecraft version supported (1.21.11 - protocol 774)
+    // Maximum Minecraft version supported by the bundled PacketEvents version.
     // TODO: When upgrading PacketEvents, check if newer Minecraft versions are supported and update MAX_VERSION accordingly.
     // See: https://github.com/retrooper/packetevents#supported-versions
-    private static final ClientVersion MAX_VERSION = ClientVersion.V_1_21_11; // Latest supported in PacketEvents
+    private static final ClientVersion MAX_VERSION = ClientVersion.V_26_1;
     
     // Map image size (128x128 is standard Minecraft map size)
     private static final int MAP_SIZE = 128;
