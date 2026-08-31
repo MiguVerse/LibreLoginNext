@@ -14,6 +14,7 @@ import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Plugin;
 import xyz.miguvt.libreloginnext.api.provider.LibreLoginNextProvider;
 import xyz.miguvt.libreloginnext.api.util.SemanticVersion;
+import xyz.miguvt.libreloginnext.common.util.PacketEventsLibraryLoader;
 
 public class BungeeCordBootstrap extends Plugin implements LibreLoginNextProvider<ProxiedPlayer, ServerInfo> {
 
@@ -26,6 +27,7 @@ public class BungeeCordBootstrap extends Plugin implements LibreLoginNextProvide
         getLogger().info("Loading libraries...");
 
         libraryManager.configureFromJSON();
+        PacketEventsLibraryLoader.loadPlatform(libraryManager, "packetevents-bungeecord");
 
         // Initialize PacketEvents after libraries are loaded
         PacketEvents.setAPI(BungeePacketEventsBuilder.build(this));

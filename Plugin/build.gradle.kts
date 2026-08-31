@@ -129,6 +129,36 @@ libby {
     noChecksumDependency("co.aikar:acf-bungee:.*")
 }
 
+val verifyPacketEventsRuntimeIsolation by tasks.registering {
+    dependsOn(tasks.named("libby"))
+
+    val generatedLibbyJson = layout.buildDirectory.file("libby/libby.json")
+    inputs.file(generatedLibbyJson)
+
+    doLast {
+        val content = generatedLibbyJson.get().asFile.readText()
+        val platformArtifacts = listOf(
+            "packetevents-spigot",
+            "packetevents-velocity",
+            "packetevents-bungeecord",
+        ).filter { "\"name\":\"$it\"" in content }
+
+        check(platformArtifacts.isEmpty()) {
+            "PacketEvents platform jars must not be present in global libby.json: ${platformArtifacts.joinToString()}"
+        }
+        check("\"name\":\"packetevents-api\"" in content) {
+            "packetevents-api must remain in global libby.json"
+        }
+        check("\"name\":\"packetevents-netty-common\"" in content) {
+            "packetevents-netty-common must remain in global libby.json"
+        }
+    }
+}
+
+tasks.named("check") {
+    dependsOn(verifyPacketEventsRuntimeIsolation)
+}
+
 configurations.all {
     // I hate this, but it needs to be done as bungeecord does not support newer versions of adventure, and packetevents includes it
     resolutionStrategy {
@@ -197,11 +227,14 @@ dependencies {
     //Paper
     compileOnly("io.papermc.paper:paper-api:1.21.11-R0.1-SNAPSHOT")
     //compileOnly "com.comphenix.protocol:ProtocolLib:5.1.0"
-    libby("com.github.retrooper:packetevents-spigot:2.13.0")
 
-    //PacketEvents for Velocity and BungeeCord
-    libby("com.github.retrooper:packetevents-velocity:2.13.0")
-    libby("com.github.retrooper:packetevents-bungeecord:2.13.0")
+    // PacketEvents has platform-specific jars that contain classes with identical names but incompatible bytecode.
+    // Keep only the shared components in libby.json; each bootstrap loads exactly one platform implementation.
+    libby("com.github.retrooper:packetevents-api:2.13.0")
+    libby("com.github.retrooper:packetevents-netty-common:2.13.0")
+    compileOnly("com.github.retrooper:packetevents-spigot:2.13.0")
+    compileOnly("com.github.retrooper:packetevents-velocity:2.13.0")
+    compileOnly("com.github.retrooper:packetevents-bungeecord:2.13.0")
 
     compileOnly("io.netty:netty-transport:4.2.9.Final")
     compileOnly("com.mojang:datafixerupper:8.0.16") //I hate this so much
