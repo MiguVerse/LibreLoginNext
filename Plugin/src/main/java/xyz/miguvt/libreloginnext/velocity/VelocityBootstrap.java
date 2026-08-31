@@ -25,6 +25,7 @@ import xyz.miguvt.libreloginnext.api.LibreLoginNextPlugin;
 import xyz.miguvt.libreloginnext.api.provider.LibreLoginNextProvider;
 import xyz.miguvt.libreloginnext.api.util.SemanticVersion;
 import xyz.miguvt.libreloginnext.common.BuildConstants;
+import xyz.miguvt.libreloginnext.common.util.PacketEventsLibraryLoader;
 
 import org.slf4j.Logger;
 
@@ -87,6 +88,7 @@ public class VelocityBootstrap implements LibreLoginNextProvider<Player, Registe
         logger.info("Loading libraries...");
 
         libraryManager.configureFromJSON();
+        PacketEventsLibraryLoader.loadPlatform(libraryManager, "packetevents-velocity");
 
         // Initialize PacketEvents after libraries are loaded
         PacketEvents.setAPI(VelocityPacketEventsBuilder.build(server, container, logger, dataDirectory));

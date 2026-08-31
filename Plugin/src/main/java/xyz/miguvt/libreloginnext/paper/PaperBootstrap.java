@@ -11,6 +11,7 @@ import net.byteflux.libby.LibraryManager;
 import net.byteflux.libby.PaperLibraryManager;
 import xyz.miguvt.libreloginnext.api.provider.LibreLoginNextProvider;
 import xyz.miguvt.libreloginnext.api.util.SemanticVersion;
+import xyz.miguvt.libreloginnext.common.util.PacketEventsLibraryLoader;
 
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -59,6 +60,7 @@ public class PaperBootstrap extends JavaPlugin implements LibreLoginNextProvider
 
         try {
             libraryManager.configureFromJSON();
+            PacketEventsLibraryLoader.loadPlatform(libraryManager, "packetevents-spigot");
         } catch (Exception e) {
             getSLF4JLogger().error("Failed to load libraries, stopping server to prevent damage", e);
             stopServer();
